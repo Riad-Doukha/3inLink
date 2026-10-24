@@ -58,6 +58,4 @@ See [`eog/README.md`](eog/README.md).
 - **Dr. Ahlem Benazzouz:** EOG hardware, signal acquisition, processing and classification (`eog/`).
 - **Eng. Mohamed Riad Doukha:** design system, patient screen, nurse app, web platform.
 
-AI tools: Claude (Anthropic) was used to help write the web application code.
-
 Icons: command symbols drawn for 3inLink. The settings gear is adapted from [Lucide](https://lucide.dev) (ISC licence).
