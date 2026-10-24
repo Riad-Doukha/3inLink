@@ -6,6 +6,7 @@ import {
 import { BrandMark, Icon } from '@3inlink/design-tokens';
 import { DemoSwitch } from '../lib/DemoSwitch';
 import { Scaled } from '../lib/Scaled';
+import { useMedia } from '../lib/useMedia';
 import { publishGaze } from '../lib/gazeBus';
 import { alertStore } from '../lib/alertStore';
 import { PatientScreen } from '../patient/PatientScreen';
@@ -48,6 +49,8 @@ export function DemoRoom() {
   const [view, setView] = useState({ t: 0, playing: false, speed: 1 });
   const [outcomes, setOutcomes] = useState<Record<number, Outcome>>({});
   const shadow = useRef<HciState>(initialHci);
+  // on phones the patient screen is laid out at a phone-like width so its text stays readable
+  const narrow = useMedia('(max-width: 900px)');
 
   useEffect(() => { document.documentElement.dataset.mode = 'night'; }, []);
 
@@ -185,7 +188,7 @@ export function DemoRoom() {
         <div className="room-right">
           <div className="monitor-fit">
             <div className="monitor">
-              <Scaled width={1280} className="monitor-screen">
+              <Scaled width={narrow ? 560 : 1280} className="monitor-screen">
                 <PatientScreen embedded />
               </Scaled>
             </div>

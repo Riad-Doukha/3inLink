@@ -18,7 +18,7 @@
 .h-glow { position:absolute !important; inset:auto -10% -40% auto; width:60vw; height:60vw; max-width:760px; max-height:760px; border-radius:50%; background:radial-gradient(circle, color-mix(in srgb, var(--action) 24%, transparent), transparent 65%); pointer-events:none; translate:0 calc(var(--sy, 0) * -0.25px); }
 .h-hero-text { display:grid; gap:var(--s4); max-width:560px; justify-self:end; width:100%; }
 .h-hero .h-eyebrow { color:var(--action); }
-.h-hero h1 { font-size:clamp(2.6rem, 6.5vw, 4.75rem); line-height:1.02; letter-spacing:-.025em; max-width:11ch; text-wrap:balance; }
+.h-hero h1 { font-size:clamp(2.1rem, 7vw, 4.75rem); line-height:1.02; letter-spacing:-.025em; max-width:11ch; text-wrap:balance; }
 .h-lead { font-size:var(--t-md); line-height:1.6; opacity:.9; max-width:46ch; }
 .h-cta { display:flex; flex-wrap:wrap; gap:var(--s3); margin-top:var(--s2); }
 .h-btn { display:inline-flex; align-items:center; gap:var(--s2); min-height:50px; padding:0 22px; border-radius:var(--r-chip); font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); text-decoration:none; background:var(--brand-ink); color:var(--brand) !important; border:2px solid var(--brand-ink); transition:transform .15s, background .15s; }
@@ -36,7 +36,7 @@
 .h-mini-tile[data-state="focus"] { background:var(--focus-fill); border-color:var(--focus); color:var(--focus-ink); transform:scale(1.04); }
 .h-mini-tile[data-state="sent"] { background:var(--sent-fill); border-color:var(--sent); color:var(--sent); transform:scale(1.04); }
 .h-mini-panel { grid-area:2 / 2; display:grid; align-content:center; justify-items:center; gap:6px; text-align:center; padding:8px; border-radius:16px; background:var(--bg); border:1px solid var(--line); min-width:0; }
-.h-mini-cap { font-family:var(--f-mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.h-mini-cap { font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
 .h-mini-msg { font-family:var(--f-display); font-weight:700; font-size:clamp(.7rem, 1.6vw, .95rem); line-height:1.2; color:var(--panel-focus); overflow-wrap:anywhere; }
 .h-mini-panel[data-state="sent"] .h-mini-msg { color:#FFB4AC; }
 
@@ -180,4 +180,10 @@ kbd { font-family:var(--f-mono); font-size:var(--t-xs); min-width:26px; text-ali
 @media (prefers-reduced-motion: reduce) {
   .h-glow, .h-mini { translate:none; }
   .h-scroll, .h-mini-msg { animation:none; }
+}
+
+@media (max-width:420px) {
+  .h-mini-cap { display:none; }
+  .h-sec h2 { font-size:1.5rem; }
+  .h-facts b { font-size:1.9rem; }
 }

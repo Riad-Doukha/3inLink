@@ -1,13 +1,13 @@
 /* Patient screen: full-viewport version of the "Patient screen" stage in the design system. */
 /* Exactly one viewport: the grid shrinks to fit, the page never scrolls. */
-.app { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto minmax(0, 1fr) auto auto; background:var(--bg); color:var(--ink); }
+.app { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-columns:minmax(0, 1fr); grid-template-rows:auto minmax(0, 1fr) auto auto; background:var(--bg); color:var(--ink); }
 .app.embedded { height:100%; }
 
 .bar { display:flex; flex-wrap:wrap; gap:var(--s2) var(--s3); justify-content:space-between; align-items:center; background:var(--brand); color:var(--brand-ink); padding:var(--s3) var(--s4); }
 .bar-start { display:inline-flex; flex-wrap:wrap; align-items:center; gap:var(--s2) var(--s4); }
 .bar-brand { color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:var(--s2); font-family:var(--f-display); font-weight:700; font-size:var(--t-md); }
 .bar-brand .mark { width:28px; height:28px; }
-.bar-meta { display:inline-flex; align-items:center; gap:var(--s3); }
+.bar-meta { display:inline-flex; flex-wrap:wrap; align-items:center; gap:var(--s2) var(--s3); min-width:0; }
 .phase-tag { font-family:var(--f-mono); font-size:var(--t-xs); letter-spacing:.08em; opacity:.9; }
 .ai-pill { display:inline-flex; align-items:center; gap:6px; background:var(--ai); color:var(--ai-ink); border-radius:99px; padding:4px 14px; font-size:var(--t-xs); font-weight:700; font-family:var(--f-display); }
 .ai-pill::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
@@ -16,7 +16,7 @@
 
 /* 3x3 matrix; the center cell is the message panel */
 /* the gaze grid is physical: in Arabic only the text runs right to left, the tiles never mirror */
-.pgrid { direction:ltr; display:grid; gap:var(--s4); padding:var(--s4); grid-template-columns:1fr 1.3fr 1fr; grid-template-rows:minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); min-height:0; }
+.pgrid { direction:ltr; display:grid; gap:var(--s4); padding:var(--s4); grid-template-columns:minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows:minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); min-height:0; }
 .p0{grid-area:1/1}.p1{grid-area:1/2}.p2{grid-area:1/3}.p3{grid-area:2/3}.p4{grid-area:3/3}.p5{grid-area:3/2}.p6{grid-area:3/1}.p7{grid-area:2/1}
 
 .tile { appearance:none; font:inherit; color:var(--ink); cursor:pointer; background:var(--surface); border:3px solid var(--line); border-radius:var(--r-tile); min-height:0; overflow:hidden; padding:var(--s3); display:grid; grid-template-rows:auto minmax(0, 1fr) auto; justify-items:center; align-items:center; gap:var(--s2); text-align:center; transition:background .15s, border-color .15s; min-width:0; }
@@ -33,11 +33,11 @@
    language chips are the first things to go when the panel gets short. */
 .msg { grid-area:2 / 2; container-type:size; background:var(--panel); color:var(--panel-ink); border-radius:var(--r-tile); padding:var(--s2) var(--s3); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; min-width:0; min-height:0; overflow:hidden; }
 .msg > * + * { margin-top:2.5cqh; }
-.msg .cap { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--f-mono); font-size:min(var(--t-xs), 6cqh, 3.2cqi); letter-spacing:.12em; text-transform:uppercase; opacity:.8; }
+.msg .cap { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--f-mono); font-size:max(11px, min(var(--t-xs), 6cqh, 3.2cqi)); letter-spacing:.12em; text-transform:uppercase; opacity:.8; }
 .msg[data-state="pending"] .cap { color:var(--panel-focus); opacity:1; }
-.msg .line { font-family:var(--f-display); font-weight:700; font-size:min(2.6rem, 15cqh, 6.5cqi); color:var(--panel-focus); line-height:1.15; }
+.msg .line { font-family:var(--f-display); font-weight:700; font-size:max(13px, min(2.6rem, 15cqh, 6.5cqi)); overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; color:var(--panel-focus); line-height:1.15; }
 .msg[data-state="sent"] .line { color:#FFB4AC; }
-@container (max-height: 140px) { .msg .cap { display:none; } }
+@container (max-height: 140px) or (max-width: 170px) { .msg .cap { display:none; } }
 
 /* voice language chips, in the top bar so they are always reachable */
 .langs { display:inline-flex; gap:6px; align-items:center; }
@@ -97,7 +97,7 @@
 .wheel-item[data-d="1"] { left:3%; right:3%; opacity:.8; }
 .wheel-item[data-d="2"] { left:6%; right:6%; opacity:.55; }
 .wheel-item[data-d="3"], .wheel-item[data-d="4"] { left:6%; right:6%; opacity:0; pointer-events:none; }
-.wheel-num { font-family:var(--f-mono); font-size:max(10px, 1.5cqh); color:var(--muted); letter-spacing:.1em; }
+.wheel-num { font-family:var(--f-mono); font-size:max(11px, 1.5cqh); color:var(--muted); letter-spacing:.1em; }
 .wheel-item svg { height:min(64%, 9cqh); width:auto; aspect-ratio:1; color:var(--action); }
 .wheel-label { font-family:var(--f-display); font-weight:600; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:max(.75rem, 3.3cqh); }
 .wheel-item[data-d="2"] .wheel-label { font-size:max(.7rem, 2.8cqh); }
@@ -112,14 +112,14 @@
 .wheel-item.center[data-state="idle"] { border-style:dashed; border-color:var(--action); }
 .wheel-text { min-width:0; display:grid; gap:.6cqh; }
 .wheel-text > span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.wheel-cap { font-family:var(--f-mono); font-size:max(10px, 1.6cqh); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.wheel-cap { font-family:var(--f-mono); font-size:max(11px, 1.6cqh); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
 .wheel[data-status="pending"] .wheel-cap { color:var(--focus-ink); font-weight:600; }
 .wheel-line { font-family:var(--f-display); font-weight:700; font-size:max(1.1rem, 6.4cqh); line-height:1.12; }
 /* long messages may take two lines in the middle row */
 .wheel-text > .wheel-line { white-space:normal; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
 .wheel[data-status="focus"] .wheel-line, .wheel[data-status="pending"] .wheel-line { color:var(--focus-ink); }
 .wheel[data-status="sent"] .wheel-line { color:var(--sent-ink); }
-.wheel-nav { display:grid; gap:1cqh; font-family:var(--f-mono); font-size:max(10px, 1.5cqh); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+.wheel-nav { display:grid; gap:1cqh; font-family:var(--f-mono); font-size:max(11px, 1.5cqh); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
 .wheel-nav span { display:inline-flex; align-items:center; gap:6px; }
 .wheel-nav svg { height:max(14px, 2.4cqh) !important; color:var(--muted) !important; }
 
@@ -136,3 +136,17 @@
 /* Arabic letters join: no letter-spacing or uppercase styling, and the Arabic face instead of the mono one */
 .app[lang="ar"] .phase-tag, .app[lang="ar"] .msg .cap, .app[lang="ar"] .wheel-cap, .app[lang="ar"] .wheel-nav,
 .app[lang="ar"] .legend { font-family:var(--f-ar); letter-spacing:0; text-transform:none; }
+
+/* small phones: compact bar so the messages keep the space */
+@media (max-width:480px) {
+  .bar { padding:var(--s2) var(--s3); }
+  .ai-pill { padding:3px 10px; }
+  .test-ctrl { padding:var(--s2) var(--s3); }
+  .test-ctrl .btn { flex:1 1 30%; justify-content:center; padding:8px 10px; }
+}
+@media (max-width:480px) {
+  .tile { gap:4px; }
+  .tile .d { display:none; }
+  .tile { grid-template-rows:minmax(0, 1fr) auto; }
+  .tile svg { width:26px; height:26px; }
+}

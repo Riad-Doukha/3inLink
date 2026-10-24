@@ -13,7 +13,7 @@
 .room-session select { font:inherit; font-family:var(--f-display); font-size:var(--t-sm); color:var(--ink); background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-chip); min-height:36px; padding:0 10px; }
 .room-badge { font-family:var(--f-mono); font-size:11px; padding:3px 10px; border-radius:99px; background:var(--focus-fill); color:var(--focus-ink); }
 .room-badge.simulated { background:var(--surface-2); color:var(--muted); }
-.room-controls { display:flex; align-items:center; gap:var(--s2); margin-inline-start:auto; }
+.room-controls { display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2); margin-inline-start:auto; }
 .room-play { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 18px; border:0; border-radius:var(--r-chip); background:var(--action); color:var(--action-ink); font:inherit; font-family:var(--f-display); font-weight:700; font-size:var(--t-sm); cursor:pointer; }
 .room-play svg { width:18px; height:18px; }
 .room-btn, .room-link { min-height:40px; padding:0 14px; border-radius:var(--r-chip); border:1.5px solid var(--line); background:transparent; color:var(--ink); font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); cursor:pointer; }
@@ -21,7 +21,7 @@
 .room-seg { display:inline-flex; border:1.5px solid var(--line); border-radius:var(--r-chip); overflow:hidden; }
 .room-seg button { border:0; background:transparent; color:var(--ink); font:inherit; font-family:var(--f-mono); font-size:var(--t-xs); min-height:37px; padding:0 12px; cursor:pointer; }
 .room-seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
-.room-time { font-family:var(--f-mono); font-size:var(--t-xs); color:var(--muted); min-width:96px; text-align:end; font-variant-numeric:tabular-nums; }
+.room-time { font-family:var(--f-mono); font-size:var(--t-xs); color:var(--muted); min-width:0; text-align:end; font-variant-numeric:tabular-nums; }
 .room-error { padding:var(--s2) var(--s3); border-radius:var(--r-chip); background:var(--sent-fill); color:var(--sent-ink); font-size:var(--t-sm); }
 
 /* layout: signal + eye on the left, patient screen on the right */
@@ -37,7 +37,7 @@
 /* signal */
 .plot { display:block; width:100%; height:clamp(120px, 22vh, 220px); }
 .room-strip { list-style:none; margin:0; padding:0; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:3px; }
-.room-strip li { min-width:0; text-align:center; padding:4px 0; border-radius:5px; font-family:var(--f-mono); font-size:10px; font-weight:500; background:var(--surface-2); color:var(--muted); border:1px solid transparent; opacity:.6; transition:opacity .3s, background .3s, border-color .3s, color .3s; }
+.room-strip li { min-width:0; text-align:center; padding:4px 0; border-radius:5px; font-family:var(--f-mono); font-size:11px; font-weight:500; background:var(--surface-2); color:var(--muted); border:1px solid transparent; opacity:.6; transition:opacity .3s, background .3s, border-color .3s, color .3s; }
 .room-strip li.done { opacity:1; }
 .room-strip li.done.move { background:var(--focus-fill); border-color:var(--focus); color:var(--focus-ink); }
 .room-strip li.done.send { background:var(--sent-fill); border-color:var(--sent); color:var(--sent-ink); font-weight:700; }
@@ -80,4 +80,20 @@
   .monitor-fit { container-type:inline-size; }
   .monitor { width:100%; }
   .eye-svg { height:auto; max-height:180px; }
+}
+
+/* phones: nothing wider than the screen, controls wrap, the decision strip becomes two rows */
+@media (max-width:600px) {
+  .room { padding:0 var(--s3) var(--s3); }
+  .room-bar { gap:var(--s2); }
+  .room-session { width:100%; }
+  .room-badge { white-space:normal; }
+  .room-controls { margin-inline-start:0; width:100%; }
+  .room-strip { grid-auto-flow:row; grid-template-columns:repeat(9, minmax(0, 1fr)); }
+  .room-last { white-space:normal; }
+  .room-panel { padding:var(--s3); }
+  .eye-svg { max-height:150px; }
+}
+@media (max-width:900px) {
+  .monitor { aspect-ratio:4 / 5; max-width:560px; margin-inline:auto; padding:6px; border-radius:14px; }
 }

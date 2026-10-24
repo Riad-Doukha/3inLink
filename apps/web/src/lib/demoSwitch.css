@@ -1,6 +1,6 @@
-.demo-switch { display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius:99px; font-family:var(--f-display); font-size:var(--t-xs); font-weight:600; }
+.demo-switch { display:inline-flex; flex-wrap:wrap; max-width:100%; align-items:center; gap:2px; padding:3px; border-radius:99px; font-family:var(--f-display); font-size:var(--t-xs); font-weight:600; }
 .demo-switch a { display:inline-flex; align-items:center; min-height:32px; padding:0 12px; border-radius:99px; text-decoration:none; transition:background .15s, color .15s; }
-.demo-switch-tag { font-family:var(--f-mono); font-weight:500; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:0 8px 0 6px; opacity:.7; }
+.demo-switch-tag { font-family:var(--f-mono); font-weight:500; font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:0 8px 0 6px; opacity:.7; }
 
 /* on the dark brand bar (patient screen) */
 .demo-switch.brand { border:1px solid color-mix(in srgb, var(--brand-ink) 35%, transparent); color:var(--brand-ink); }
