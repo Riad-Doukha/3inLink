@@ -18,14 +18,16 @@
 .n-tabs button[aria-selected="true"] { background:var(--brand-ink); color:var(--brand); }
 
 .n-list { padding:var(--s3); display:grid; gap:var(--s3); align-content:start; min-height:0; overflow-y:auto; overscroll-behavior:contain; }
-.acard { appearance:none; font:inherit; text-align:start; color:var(--ink); width:100%; cursor:pointer; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-card); padding:var(--s3); display:grid; grid-template-columns:auto 1fr auto; gap:var(--s3); align-items:start; min-height:72px; }
+.acard { appearance:none; font:inherit; text-align:start; color:var(--ink); width:100%; cursor:pointer; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-card); padding:var(--s3); display:grid; grid-template-columns:auto minmax(0, 1fr) auto; gap:var(--s3); align-items:start; min-height:72px; }
+/* the middle column may shrink below its content so long titles and chips wrap inside the card */
+.acard > span:nth-child(2), .n-banner > span:nth-child(2) { min-width:0; }
 .acard.urgent { border-color:var(--urgent); border-width:2px; }
 .ic { width:46px; height:46px; border-radius:12px; background:var(--action); color:var(--action-ink); display:grid; place-items:center; flex:none; }
 .ic svg { width:24px; height:24px; }
 .acard.urgent .ic, .n-banner.urgent .ic { background:var(--urgent); color:var(--urgent-ink); }
-.ti { display:block; font-family:var(--f-display); font-weight:600; font-size:var(--t-base); line-height:1.25; }
-.chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-.chip { font-family:var(--f-mono); font-size:11px; font-weight:500; border-radius:6px; padding:2px 8px; background:var(--tint); color:var(--ink); }
+.ti { display:block; overflow-wrap:anywhere; font-family:var(--f-display); font-weight:600; font-size:var(--t-base); line-height:1.25; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; min-width:0; }
+.chip { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--f-mono); font-size:11px; font-weight:500; border-radius:6px; padding:2px 8px; background:var(--tint); color:var(--ink); }
 .chip.room { background:var(--brand); color:var(--brand-ink); }
 .tm { font-size:var(--t-xs); color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
 .tm.late { color:var(--urgent); font-weight:700; }
@@ -34,7 +36,7 @@
 .empty { text-align:center; color:var(--muted); padding:var(--s7) var(--s4); font-size:var(--t-sm); }
 .n-hint { text-align:center; color:var(--muted); font-size:var(--t-xs); }
 
-.n-banner { margin:var(--s3) var(--s3) 0; background:var(--surface); border:2px solid var(--action); border-radius:var(--r-card); padding:var(--s3); display:grid; grid-template-columns:auto 1fr auto; gap:var(--s3); align-items:center; box-shadow:0 10px 24px -14px rgba(6,20,28,.6); }
+.n-banner { margin:var(--s3) var(--s3) 0; background:var(--surface); border:2px solid var(--action); border-radius:var(--r-card); padding:var(--s3); display:grid; grid-template-columns:auto minmax(0, 1fr) auto; gap:var(--s3); align-items:center; box-shadow:0 10px 24px -14px rgba(6,20,28,.6); }
 .n-banner.urgent { border-color:var(--urgent); background:var(--sent-fill); }
 .n-banner-cap { display:block; font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
 .n-dismiss { appearance:none; font:inherit; font-size:var(--t-sm); min-height:44px; padding:0 12px; border-radius:var(--r-chip); border:1.5px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; }
