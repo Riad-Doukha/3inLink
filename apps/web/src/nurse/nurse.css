@@ -60,3 +60,6 @@
 .n-foot .demo-switch { display:flex; flex-wrap:wrap; width:100%; border-radius:var(--r-chip); }
 .n-foot .demo-switch a { flex:1 1 auto; justify-content:center; padding:0 8px; white-space:nowrap; }
 .n-reset { flex:none; white-space:nowrap; appearance:none; font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-xs); min-height:36px; padding:4px 12px; border-radius:var(--r-chip); border:2px solid var(--action); background:transparent; color:var(--action); cursor:pointer; }
+
+/* Arabic letters join: no letter-spacing or uppercase styling on the mono captions */
+.nurse[lang="ar"] .n-ward, .nurse[lang="ar"] .n-banner-cap { font-family:var(--f-ar); letter-spacing:0; text-transform:none; }

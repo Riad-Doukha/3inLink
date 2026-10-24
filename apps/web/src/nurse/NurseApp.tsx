@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { DIR, LANGS, STAFF_MESSAGES, URGENT, type Lang, type PatientAlert } from '@3inlink/core';
+import { DIR, LANGS, STAFF_MESSAGES, URGENT, type PatientAlert } from '@3inlink/core';
 import { Icon } from '@3inlink/design-tokens';
 import { alertStore, type AlertChange, type StoreStatus } from '../lib/alertStore';
 import { NURSE_TEXT } from './strings';
 import { notifyNewAlert } from './notify';
 import { DemoSwitch } from '../lib/DemoSwitch';
+import { setLang, useLang } from '../lib/lang';
 import './nurse.css';
 
 const PREFS_KEY = '3inlink.nurse.prefs';
@@ -12,14 +13,15 @@ const LATE_MIN = 10;
 /** Alerts older than this when they arrive (e.g. backdated demo seeds) do not ring. */
 const FRESH_MS = 60_000;
 
-type Prefs = { lang: Lang; mode: 'day' | 'night' };
+/** Lighting is per device; the language is shared with the patient screen (lib/lang.ts). */
+type Prefs = { mode: 'day' | 'night' };
 
 function loadPrefs(): Prefs {
   try {
     const raw = localStorage.getItem(PREFS_KEY);
-    if (raw) return { lang: 'en', mode: 'day', ...JSON.parse(raw) };
+    if (raw) return { mode: JSON.parse(raw).mode === 'night' ? 'night' : 'day' };
   } catch { /* defaults */ }
-  return { lang: 'en', mode: 'day' };
+  return { mode: 'day' };
 }
 
 /** Pain first, then newest first; handled list by most recently handled. */
@@ -36,7 +38,8 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
   const [banner, setBanner] = useState<PatientAlert | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
-  const t = NURSE_TEXT[prefs.lang];
+  const lang = useLang();
+  const t = NURSE_TEXT[lang];
   const tRef = useRef(t);
   tRef.current = t;
 
@@ -120,7 +123,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
   };
 
   return (
-    <div className={`nurse${embedded ? ' embedded' : ''}`} data-mode={prefs.mode} dir={DIR[prefs.lang]} lang={prefs.lang}>
+    <div className={`nurse${embedded ? ' embedded' : ''}`} data-mode={prefs.mode} dir={DIR[lang]} lang={lang}>
       <div className="n-col">
         <header className="n-head">
           <div className="n-top">
@@ -141,7 +144,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
             <span className="ic"><Icon name={banner.command} /></span>
             <span>
               <span className="n-banner-cap">{t.newAlert}</span>
-              <span className="ti">{STAFF_MESSAGES[banner.command][prefs.lang]}</span>
+              <span className="ti">{STAFF_MESSAGES[banner.command][lang]}</span>
               <span className="chips">
                 <span className="chip" dir="ltr">ID {banner.patientCode}</span>
                 <span className="chip room">{t.room} <bdi dir="ltr">{banner.room}</bdi></span>
@@ -168,7 +171,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
               >
                 <span className="ic"><Icon name={done ? 'check' : a.command} /></span>
                 <span>
-                  <span className="ti">{STAFF_MESSAGES[a.command][prefs.lang]}</span>
+                  <span className="ti">{STAFF_MESSAGES[a.command][lang]}</span>
                   <span className="chips">
                     <span className="chip" dir="ltr">ID {a.patientCode}</span>
                     <span className="chip room">{t.room} <bdi dir="ltr">{a.room}</bdi></span>
@@ -187,9 +190,9 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
             <button className="n-reset" onClick={() => void reset()}>{t.reset}</button>
           </div>
           <div className="n-tools">
-            <div className="seg" role="group" aria-label={t.language}>
+            <div className="seg" role="group" aria-label={t.language} dir="ltr">
               {LANGS.map((l) => (
-                <button key={l} aria-pressed={prefs.lang === l} onClick={() => updatePrefs({ lang: l })}>{l.toUpperCase()}</button>
+                <button key={l} aria-pressed={lang === l} onClick={() => setLang(l)}>{l.toUpperCase()}</button>
               ))}
             </div>
             <div className="seg" role="group">

@@ -32,7 +32,4 @@ export const STAFF_MESSAGES: Record<Command, Record<Lang, string>> = {
 export const PANEL_TEXT = {
   idle: { en: 'Look at a symbol', ar: 'انظر إلى رمز', fr: 'Regardez un symbole' },
   sent: { en: 'Sent to nursing staff', ar: 'تم الإرسال إلى طاقم التمريض', fr: "Envoyé à l'équipe soignante" },
-  capIdle: 'No message selected',
-  capFocus: 'Selected message · double blink to confirm',
-  capPending: 'Blink 1 of 2 · blink again to confirm',
 } as const;

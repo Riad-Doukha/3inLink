@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import {
-  DOUBLE_BLINK_WINDOW_MS, LANGS, ORDER, PANEL_TEXT, PATIENT_MESSAGES,
+  DIR, DOUBLE_BLINK_WINDOW_MS, LANGS, ORDER, PANEL_TEXT, PATIENT_MESSAGES,
   allowedDirections, initialHci, reduceHci,
-  type Direction, type HciInput, type HciState, type Lang, type Phase,
+  type Direction, type HciInput, type HciState, type Phase,
 } from '@3inlink/core';
 import { BrandMark, Icon } from '@3inlink/design-tokens';
 import { speak } from './speech';
@@ -12,6 +12,8 @@ import { SettingsDialog } from './SettingsDialog';
 import { Wheel } from './Wheel';
 import { DemoSwitch } from '../lib/DemoSwitch';
 import { subscribeGaze } from '../lib/gazeBus';
+import { setLang, useLang } from '../lib/lang';
+import { PATIENT_TEXT } from './strings';
 import './patient.css';
 
 /** Send a confirmed message to staff; retry once so a brief network drop does not lose it. */
@@ -38,6 +40,8 @@ export function PatientScreen({ embedded = false }: { embedded?: boolean }) {
   const [settings, setSettings] = useState<PatientSettings>(loadSettings);
   const [hci, dispatch] = useReducer(reducer, initialHci);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const lang = useLang();
+  const t = PATIENT_TEXT[lang];
 
   const input = useCallback((i: HciInput) => dispatch({ input: i, phase: settings.phase }), [settings.phase]);
   const blink = useCallback(() => input({ type: 'blink', t: performance.now() }), [input]);
@@ -86,55 +90,55 @@ export function PatientScreen({ embedded = false }: { embedded?: boolean }) {
   // Voice before send: speak the focused message; confirm the send out loud.
   const cmd = hci.cur === null ? null : ORDER[hci.cur]!;
   useEffect(() => {
-    if (cmd && hci.status === 'focus') speak(PATIENT_MESSAGES[cmd][settings.voice], settings.voice);
-    // only on a new focus, not when a pending blink expires or the voice changes
+    if (cmd && hci.status === 'focus') speak(PATIENT_MESSAGES[cmd][lang], lang);
+    // only on a new focus, not when a pending blink expires or the language changes
   }, [hci.cur]);
 
   const prevStatus = useRef(hci.status);
   useEffect(() => {
     if (hci.status === 'sent' && prevStatus.current !== 'sent' && cmd) {
-      speak(PANEL_TEXT.sent[settings.voice], settings.voice);
+      speak(PANEL_TEXT.sent[lang], lang);
       void sendAlert({ patientCode: settings.patientCode, room: settings.room, command: cmd });
     }
     prevStatus.current = hci.status;
-  }, [hci.status, cmd, settings]);
+  }, [hci.status, cmd, settings, lang]);
 
   const sent = hci.status === 'sent';
-  const panelLines: Record<Lang, string> = cmd === null
-    ? PANEL_TEXT.idle
-    : sent ? PANEL_TEXT.sent : PATIENT_MESSAGES[cmd];
+  const panelText = cmd === null
+    ? PANEL_TEXT.idle[lang]
+    : sent ? PANEL_TEXT.sent[lang] : PATIENT_MESSAGES[cmd][lang];
   const caption = cmd === null
-    ? PANEL_TEXT.capIdle
-    : sent ? `${PATIENT_MESSAGES[cmd].en} · ${settings.patientCode} · Room ${settings.room}`
-    : hci.status === 'pending' ? PANEL_TEXT.capPending : PANEL_TEXT.capFocus;
+    ? t.capIdle
+    : sent ? `${PATIENT_MESSAGES[cmd][lang]} · ${settings.patientCode} · ${t.room} ${settings.room}`
+    : hci.status === 'pending' ? t.capPending : t.capFocus;
   const dirs = allowedDirections(settings.phase);
 
   return (
-    <div className={`app${embedded ? ' embedded' : ''}`} data-mode={settings.mode}>
+    <div className={`app${embedded ? ' embedded' : ''}`} data-mode={settings.mode} lang={lang} dir={DIR[lang]}>
       <header className="bar">
         <span className="bar-start">
           <a className="bar-brand" href="#/"><BrandMark className="mark" />3inLink</a>
           {!embedded && <DemoSwitch current="#/patient" tone="brand" />}
         </span>
         <span className="bar-meta">
-          <span className="phase-tag">{settings.phase === 1 ? 'PHASE 1 · UP / DOWN' : 'PHASE 2 · 4 DIRECTIONS'}</span>
-          <span className="ai-pill">AI Assistant</span>
-          <span className="langs" role="group" aria-label="Voice language">
+          <span className="phase-tag">{settings.phase === 1 ? t.phase1 : t.phase2}</span>
+          <span className="ai-pill">{t.ai}</span>
+          <span className="langs" role="group" aria-label={t.language} dir="ltr">
             <button
               className="spk"
-              aria-label="Read aloud"
-              onClick={() => cmd && speak(PATIENT_MESSAGES[cmd][settings.voice], settings.voice)}
+              aria-label={t.readAloud}
+              onClick={() => cmd && speak(PATIENT_MESSAGES[cmd][lang], lang)}
             >
               <Icon name="speaker" />
             </button>
             {LANGS.map((l) => (
-              <button key={l} aria-pressed={settings.voice === l} onClick={() => updateSettings({ voice: l })}>
+              <button key={l} aria-pressed={lang === l} onClick={() => setLang(l)}>
                 {l.toUpperCase()}
               </button>
             ))}
           </span>
           {!embedded && (
-            <button className="icon-btn" aria-label="Settings" onClick={() => setSettingsOpen(true)}>
+            <button className="icon-btn" aria-label={t.settings} onClick={() => setSettingsOpen(true)}>
               <Icon name="settings" />
             </button>
           )}
@@ -142,19 +146,22 @@ export function PatientScreen({ embedded = false }: { embedded?: boolean }) {
       </header>
 
       {settings.phase === 1 ? (
-        <main className="pwheel" aria-label="Eight messages stacked vertically. Up and down arrows move, Space blinks.">
+        <main className="pwheel" aria-label={t.wheelAria}>
           <Wheel
             cur={hci.cur}
             status={hci.status}
-            caption={cmd === null ? `${PANEL_TEXT.capIdle} · look up or down` : caption}
-            panelLines={panelLines}
+            lang={lang}
+            caption={cmd === null ? `${t.capIdle} · ${t.capIdleHint}` : caption}
+            panelText={panelText}
+            previous={t.previous}
+            next={t.next}
             onSelect={(i) => input({ type: 'select', index: i })}
           />
         </main>
       ) : (
         <main
           className="pgrid"
-          aria-label="Eight communication symbols around the message panel. Arrow keys move, Space blinks."
+          aria-label={t.gridAria}
         >
           {ORDER.map((c, i) => {
             const state = hci.cur === i ? (sent ? 'sent' : 'focus') : 'idle';
@@ -168,35 +175,33 @@ export function PatientScreen({ embedded = false }: { embedded?: boolean }) {
               >
                 <span className="d">{String(i + 1).padStart(2, '0')}</span>
                 <Icon name={c} />
-                <span className="l">{PATIENT_MESSAGES[c].en}</span>
+                <span className="l" dir={DIR[lang]}>{PATIENT_MESSAGES[c][lang]}</span>
               </button>
             );
           })}
   
-          <section className="msg" data-state={sent ? 'sent' : hci.status} aria-live="polite">
+          <section className="msg" data-state={sent ? 'sent' : hci.status} aria-live="polite" dir={DIR[lang]}>
             <div className="cap">{caption}</div>
-            <div className="en">{panelLines.en}</div>
-            <div className="ar" lang="ar" dir="rtl">{panelLines.ar}</div>
-            <div className="fr" lang="fr">{panelLines.fr}</div>
+            <div className="line">{panelText}</div>
           </section>
         </main>
       )}
 
       <footer className="legend">
-        <span><i />Idle</span>
-        <span><i className="g" />Gaze focus: message and voice feedback</span>
-        <span><i className="r" />Double blink: confirmed, sent to staff</span>
+        <span><i />{t.legendIdle}</span>
+        <span><i className="g" />{t.legendFocus}</span>
+        <span><i className="r" />{t.legendSent}</span>
       </footer>
 
       {settings.testControls && !embedded && (
-        <div className="test-ctrl" role="group" aria-label="Test controls (simulate eye movements)">
+        <div className="test-ctrl" role="group" aria-label={t.testControls}>
           {(['left', 'right', 'up', 'down'] as const).map((d) => (
             <button key={d} className="btn ghost" disabled={!dirs.includes(d)} onClick={() => input({ type: 'gaze', dir: d })}>
-              <Icon name={d} /> {d}
+              <Icon name={d} /> {t.dir[d]}
             </button>
           ))}
-          <button className="btn ghost" data-pending={hci.status === 'pending'} onClick={blink}>Blink</button>
-          <button className="btn ghost" onClick={() => input({ type: 'clear' })}>Look away</button>
+          <button className="btn ghost" data-pending={hci.status === 'pending'} onClick={blink}>{t.blink}</button>
+          <button className="btn ghost" onClick={() => input({ type: 'clear' })}>{t.lookAway}</button>
         </div>
       )}
 

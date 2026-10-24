@@ -1,9 +1,9 @@
-import type { Lang, Phase } from '@3inlink/core';
+import type { Phase } from '@3inlink/core';
 
+/** Bedside settings. The interface and voice language is shared with the nurse app (see lib/lang.ts). */
 export interface PatientSettings {
   phase: Phase;
   mode: 'night' | 'day';
-  voice: Lang;
   patientCode: string;
   room: string;
   testControls: boolean;
@@ -14,7 +14,6 @@ const KEY = '3inlink.patient.settings';
 export const DEFAULT_SETTINGS: PatientSettings = {
   phase: 1,
   mode: 'night',
-  voice: 'en',
   patientCode: 'PT-10390',
   room: '207-A',
   testControls: true,
