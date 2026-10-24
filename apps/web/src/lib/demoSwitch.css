@@ -1,0 +1,15 @@
+.demo-switch { display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius:99px; font-family:var(--f-display); font-size:var(--t-xs); font-weight:600; }
+.demo-switch a { display:inline-flex; align-items:center; min-height:32px; padding:0 12px; border-radius:99px; text-decoration:none; transition:background .15s, color .15s; }
+.demo-switch-tag { font-family:var(--f-mono); font-weight:500; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:0 8px 0 6px; opacity:.7; }
+
+/* on the dark brand bar (patient screen) */
+.demo-switch.brand { border:1px solid color-mix(in srgb, var(--brand-ink) 35%, transparent); color:var(--brand-ink); }
+.demo-switch.brand a { color:var(--brand-ink); }
+.demo-switch.brand a:hover { background:color-mix(in srgb, var(--brand-ink) 12%, transparent); }
+.demo-switch.brand a[aria-current="page"] { background:var(--brand-ink); color:var(--brand); }
+
+/* on a light or dark surface (nurse app footer) */
+.demo-switch.surface { border:1.5px solid var(--line); color:var(--ink); background:var(--surface); }
+.demo-switch.surface a { color:var(--ink); }
+.demo-switch.surface a:hover { background:var(--tint); }
+.demo-switch.surface a[aria-current="page"] { background:var(--ink); color:var(--bg); }

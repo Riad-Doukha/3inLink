@@ -1,0 +1,16 @@
+/* Phone frame. The parent sets --phone-h; the width follows a 9:18 ratio. */
+.phone { --phone-h:640px; position:relative; height:var(--phone-h); width:calc(var(--phone-h) * 9 / 18); padding:12px; border-radius:54px; background:linear-gradient(145deg, #2a3442, #0a0f16 40%, #1b2430); box-shadow:0 0 0 1.5px #3b4757, 0 40px 80px -30px rgba(0,0,0,.8), 0 0 120px -20px color-mix(in srgb, var(--action) 35%, transparent); }
+.phone-btn { position:absolute; width:4px; border-radius:2px; background:#2a3442; }
+.phone-btn.b1 { left:-4px; top:18%; height:6%; }
+.phone-btn.b2 { left:-4px; top:27%; height:10%; }
+.phone-btn.b3 { right:-4px; top:24%; height:14%; }
+.phone-screen { position:relative; height:100%; border-radius:42px; overflow:hidden; background:#000; isolation:isolate; }
+.phone-status { position:absolute; z-index:3; inset:0 0 auto 0; height:44px; display:flex; justify-content:space-between; align-items:center; padding:0 26px 0 30px; font-family:var(--f-display); font-weight:600; font-size:13px; color:#fff; pointer-events:none; }
+.phone-island { position:absolute; left:50%; top:10px; translate:-50% 0; width:96px; height:28px; border-radius:16px; background:#000; }
+.phone-icons { display:inline-flex; gap:6px; align-items:center; }
+.phone-icons svg { height:11px; width:auto; fill:currentColor; }
+.phone-home { position:absolute; z-index:3; left:50%; bottom:8px; translate:-50% 0; width:120px; height:5px; border-radius:3px; background:color-mix(in srgb, #fff 70%, transparent); pointer-events:none; }
+
+/* the app inside the phone: make room for the status bar and home indicator */
+.phone-screen .nurse.embedded .n-head { padding-top:52px; }
+.phone-screen .nurse.embedded .n-foot { padding-bottom:22px; }

@@ -1,0 +1,60 @@
+/* Demo room: the real classifier output drives the patient screen; alerts land on the nurse phone. Night stage. */
+.room { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto auto minmax(0, 1fr) auto auto; gap:var(--s3); padding:0 clamp(12px, 2vw, 28px) var(--s3); color:var(--ink); background:
+  radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--action) 14%, transparent), transparent 60%),
+  radial-gradient(color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1.2px) 0 0 / 28px 28px,
+  var(--bg); }
+
+/* top bar */
+.room-bar { display:flex; flex-wrap:wrap; align-items:center; gap:var(--s3) var(--s5); padding-top:var(--s3); --brand-ink:var(--ink); --brand:var(--bg); }
+.room-brand { display:inline-flex; align-items:center; gap:var(--s2); font-family:var(--f-display); font-weight:700; font-size:var(--t-md); color:var(--ink); text-decoration:none; }
+.room-brand svg { width:26px; height:26px; color:var(--action); }
+.room-session { display:flex; flex-wrap:wrap; align-items:center; gap:var(--s2); min-width:0; }
+.room-title { font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); }
+.room-session select { font:inherit; font-family:var(--f-display); font-size:var(--t-sm); color:var(--ink); background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-chip); min-height:36px; padding:0 10px; }
+.room-badge { font-family:var(--f-mono); font-size:11px; padding:3px 10px; border-radius:99px; background:var(--focus-fill); color:var(--focus-ink); }
+.room-badge.simulated { background:var(--surface-2); color:var(--muted); }
+.room-controls { display:flex; align-items:center; gap:var(--s2); margin-inline-start:auto; }
+.room-play { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 18px; border:0; border-radius:var(--r-chip); background:var(--action); color:var(--action-ink); font:inherit; font-family:var(--f-display); font-weight:700; font-size:var(--t-sm); cursor:pointer; }
+.room-play svg { width:18px; height:18px; }
+.room-btn, .room-link { min-height:40px; padding:0 14px; border-radius:var(--r-chip); border:1.5px solid var(--line); background:transparent; color:var(--ink); font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); cursor:pointer; }
+.room-play:disabled, .room-btn:disabled { opacity:.4; cursor:not-allowed; }
+.room-seg { display:inline-flex; border:1.5px solid var(--line); border-radius:var(--r-chip); overflow:hidden; }
+.room-seg button { border:0; background:transparent; color:var(--ink); font:inherit; font-family:var(--f-mono); font-size:var(--t-xs); min-height:37px; padding:0 12px; cursor:pointer; }
+.room-seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
+.room-time { font-family:var(--f-mono); font-size:var(--t-xs); color:var(--muted); min-width:96px; text-align:end; font-variant-numeric:tabular-nums; }
+.room-error { padding:var(--s2) var(--s3); border-radius:var(--r-chip); background:var(--sent-fill); color:var(--sent-ink); font-size:var(--t-sm); }
+
+/* screens */
+.room-main { min-height:0; display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:clamp(16px, 2.5vw, 40px); align-items:stretch; container-type:size; }
+.room-monitor, .room-phone { min-height:0; display:grid; grid-template-rows:minmax(0, 1fr) auto; gap:var(--s2); justify-items:center; }
+.monitor { height:100%; max-width:100%; aspect-ratio:16 / 10; padding:10px; border-radius:18px; background:linear-gradient(160deg, #26303c, #0a0f16 45%, #1a2330); box-shadow:0 0 0 1.5px #3b4757, 0 30px 60px -30px rgba(0,0,0,.8); }
+.monitor-screen { width:100%; height:100%; border-radius:10px; background:#000; }
+.room-phone .phone { --phone-h:calc(100cqh - 40px); }
+.room-caption { font-size:var(--t-xs); color:var(--muted); text-align:center; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:var(--s2); }
+.room-caption b { color:var(--ink); font-family:var(--f-display); }
+.room-link { min-height:28px; padding:0 10px; font-size:var(--t-xs); }
+
+/* signal and timeline */
+.room-signal { display:grid; gap:var(--s2); padding:var(--s3) var(--s4); border-radius:var(--r-card); background:color-mix(in srgb, var(--surface) 75%, transparent); border:1px solid var(--line); backdrop-filter:blur(6px); }
+.room-signal-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--s2); font-size:var(--t-xs); color:var(--muted); }
+.room-signal-head b { color:var(--ink); font-family:var(--f-display); }
+.room-note { color:var(--focus-ink); }
+.plot { display:block; width:100%; height:clamp(110px, 16vh, 170px); }
+.room-timeline { list-style:none; margin:0; padding:0; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:4px; }
+.room-timeline li { min-width:0; display:grid; gap:1px; padding:5px 6px; border-radius:6px; background:var(--surface-2); border:1px solid transparent; font-size:10px; line-height:1.25; opacity:.55; transition:opacity .3s, background .3s, border-color .3s; }
+.room-timeline li.done { opacity:1; }
+.room-timeline li.done.move { background:var(--focus-fill); border-color:var(--focus); }
+.room-timeline li.done.send { background:var(--sent-fill); border-color:var(--sent); }
+.tl-label { font-family:var(--f-mono); font-weight:500; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tl-out { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.room-timeline li.done.move .tl-out { color:var(--focus-ink); }
+.room-timeline li.done.send .tl-out { color:var(--sent-ink); font-weight:700; }
+.room-narrow { font-size:var(--t-sm); color:var(--muted); text-align:center; }
+.room-narrow a { color:var(--action); }
+
+@media (max-width:1099px), (max-height:659px) {
+  .room { height:auto; min-height:100dvh; overflow:visible; grid-template-rows:auto; }
+  .room-main { grid-template-columns:1fr; container-type:normal; }
+  .monitor { height:auto; width:100%; }
+  .room-timeline { grid-auto-flow:row; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); }
+}

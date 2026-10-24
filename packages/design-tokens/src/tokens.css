@@ -1,0 +1,43 @@
+/* 3inLink design tokens v0.1 — source: docs/design-system.html. Day is the default; [data-mode="night"] switches a subtree. */
+:root, [data-mode="day"] {
+  --bg:#F2F6F7; --surface:#FFFFFF; --surface-2:#E8EFF1; --line:#D3DEE1;
+  --ink:#0F2A33; --muted:#4A6169;
+  --brand:#0B3C49; --brand-ink:#FFFFFF;
+  --action:#0E6B7B; --action-ink:#FFFFFF; --tint:#DCEFF2;
+  --focus:#1F9D55; --focus-fill:#DDF5E5; --focus-ink:#0B6234;
+  --sent:#C0261D; --sent-fill:#FDE8E6; --sent-ink:#8E1B12;
+  --urgent:#B42318; --urgent-ink:#FFFFFF;
+  --ai:#5B3FC4; --ai-ink:#FFFFFF;
+  --panel:#0F2A33; --panel-ink:#FFFFFF; --panel-focus:#6EE7A0;
+  color-scheme:light;
+
+  --f-display:"Lexend", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --f-ar:"Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+
+  --t-xs:.75rem; --t-sm:.875rem; --t-base:1rem; --t-md:1.125rem; --t-lg:1.375rem; --t-xl:1.75rem; --t-2xl:2.5rem;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:72px;
+  --r-chip:8px; --r-card:14px; --r-tile:22px;
+}
+[data-mode="night"] {
+  --bg:#0D1622; --surface:#162231; --surface-2:#1D2C3F; --line:#2A3B50;
+  --ink:#E6EEF2; --muted:#9FB3BD;
+  --brand:#08202A; --brand-ink:#E6EEF2;
+  --action:#5CC8D8; --action-ink:#06222A; --tint:#17333D;
+  --focus:#3DD68C; --focus-fill:#123B2A; --focus-ink:#6EE7A0;
+  --sent:#FF6B5E; --sent-fill:#4A1713; --sent-ink:#FFE9E6;
+  --urgent:#FF6B5E; --urgent-ink:#2A0B08;
+  --ai:#8E78F0; --ai-ink:#120A33;
+  --panel:#060C14; --panel-ink:#E6EEF2; --panel-focus:#6EE7A0;
+  color-scheme:dark;
+}
+
+*, *::before, *::after { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:var(--t-base); line-height:1.55; }
+h1, h2, h3, h4 { font-family:var(--f-display); line-height:1.15; margin:0; font-weight:600; letter-spacing:-.01em; }
+p { margin:0; }
+:focus-visible { outline:3px solid var(--action); outline-offset:3px; border-radius:4px; }
+[lang="ar"], [dir="rtl"] { font-family:var(--f-ar); }
+.ico { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }

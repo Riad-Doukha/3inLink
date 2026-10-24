@@ -1,0 +1,88 @@
+/* Patient screen: full-viewport version of the "Patient screen" stage in the design system. */
+/* Exactly one viewport: the grid shrinks to fit, the page never scrolls. */
+.app { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto minmax(0, 1fr) auto auto; background:var(--bg); color:var(--ink); }
+.app.embedded { height:100%; }
+
+.bar { display:flex; flex-wrap:wrap; gap:var(--s2) var(--s3); justify-content:space-between; align-items:center; background:var(--brand); color:var(--brand-ink); padding:var(--s3) var(--s4); }
+.bar-start { display:inline-flex; flex-wrap:wrap; align-items:center; gap:var(--s2) var(--s4); }
+.bar-brand { color:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:var(--s2); font-family:var(--f-display); font-weight:700; font-size:var(--t-md); }
+.bar-brand .mark { width:28px; height:28px; }
+.bar-meta { display:inline-flex; align-items:center; gap:var(--s3); }
+.phase-tag { font-family:var(--f-mono); font-size:var(--t-xs); letter-spacing:.08em; opacity:.9; }
+.ai-pill { display:inline-flex; align-items:center; gap:6px; background:var(--ai); color:var(--ai-ink); border-radius:99px; padding:4px 14px; font-size:var(--t-xs); font-weight:700; font-family:var(--f-display); }
+.ai-pill::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+.icon-btn { appearance:none; display:grid; place-items:center; width:44px; height:44px; border-radius:var(--r-chip); border:1px solid color-mix(in srgb, var(--brand-ink) 40%, transparent); background:transparent; color:var(--brand-ink); cursor:pointer; }
+.icon-btn svg { width:22px; height:22px; }
+
+/* 3x3 matrix; the center cell is the message panel */
+.pgrid { display:grid; gap:var(--s4); padding:var(--s4); grid-template-columns:1fr 1.3fr 1fr; grid-template-rows:minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); min-height:0; }
+.p0{grid-area:1/1}.p1{grid-area:1/2}.p2{grid-area:1/3}.p3{grid-area:2/3}.p4{grid-area:3/3}.p5{grid-area:3/2}.p6{grid-area:3/1}.p7{grid-area:2/1}
+
+.tile { appearance:none; font:inherit; color:var(--ink); cursor:pointer; background:var(--surface); border:3px solid var(--line); border-radius:var(--r-tile); min-height:0; overflow:hidden; padding:var(--s3); display:grid; grid-template-rows:auto minmax(0, 1fr) auto; justify-items:center; align-items:center; gap:var(--s2); text-align:center; transition:background .15s, border-color .15s; min-width:0; }
+.tile .d { justify-self:start; font-family:var(--f-mono); font-size:var(--t-xs); color:var(--muted); letter-spacing:.1em; }
+.tile svg { width:clamp(28px, 9vh, 120px); height:clamp(28px, 9vh, 120px); color:var(--action); }
+.tile .l { font-family:var(--f-display); font-weight:600; font-size:clamp(.8rem, 1.1vw + 1.1vh, 2rem); line-height:1.2; overflow-wrap:anywhere; }
+.tile[data-state="focus"] { border-color:var(--focus); background:var(--focus-fill); }
+.tile[data-state="focus"] svg { color:var(--focus-ink); }
+.tile[data-state="sent"] { border-color:var(--sent); background:var(--sent-fill); }
+.tile[data-state="sent"] svg { color:var(--sent); }
+
+/* Message panel: always fully visible, never scrolls. Text is sized from the panel's own
+   height (cqh) and width (cqi) so the longest message fits at any screen size; the caption and
+   language chips are the first things to go when the panel gets short. */
+.msg { grid-area:2 / 2; container-type:size; background:var(--panel); color:var(--panel-ink); border-radius:var(--r-tile); padding:var(--s2) var(--s3); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; min-width:0; min-height:0; overflow:hidden; }
+.msg > * + * { margin-top:2.5cqh; }
+.msg .cap { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--f-mono); font-size:min(var(--t-xs), 6cqh, 3.2cqi); letter-spacing:.12em; text-transform:uppercase; opacity:.8; }
+.msg[data-state="pending"] .cap { color:var(--panel-focus); opacity:1; }
+.msg .en { font-family:var(--f-display); font-weight:700; font-size:min(2.25rem, 11cqh, 5.5cqi); color:var(--panel-focus); line-height:1.15; }
+.msg[data-state="sent"] .en { color:#FFB4AC; }
+.msg .ar { font-family:var(--f-ar); font-size:min(1.9rem, 8cqh, 4.6cqi); line-height:1.3; }
+.msg .fr { font-size:min(1.6rem, 7cqh, 4cqi); line-height:1.2; opacity:.9; }
+@container (max-height: 140px) { .msg .cap { display:none; } }
+
+/* voice language chips, in the top bar so they are always reachable */
+.langs { display:inline-flex; gap:6px; align-items:center; }
+.langs button { appearance:none; font:inherit; font-family:var(--f-mono); font-size:12px; font-weight:500; color:var(--brand-ink); background:transparent; border:1px solid currentColor; border-radius:99px; padding:4px 12px; cursor:pointer; opacity:.8; min-height:32px; }
+.langs button[aria-pressed="true"] { background:var(--brand-ink); color:var(--brand); opacity:1; }
+.langs .spk { display:grid; place-items:center; width:34px; height:34px; padding:0; border-radius:50%; }
+.langs .spk svg { width:18px; height:18px; }
+
+.legend { display:flex; flex-wrap:wrap; gap:var(--s2) var(--s5); padding:0 var(--s4) var(--s3); font-size:var(--t-sm); color:var(--muted); }
+.legend span { display:inline-flex; align-items:center; gap:8px; }
+.legend i { width:18px; height:18px; border-radius:5px; border:2px solid var(--line); background:var(--surface); display:inline-block; }
+.legend .g { border-color:var(--focus); background:var(--focus-fill); }
+.legend .r { border-color:var(--sent); background:var(--sent-fill); }
+
+/* operator / test controls */
+.test-ctrl { display:flex; flex-wrap:wrap; gap:var(--s2); padding:var(--s3) var(--s4); border-top:1px solid var(--line); background:var(--surface-2); }
+.btn { appearance:none; font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); cursor:pointer; border-radius:var(--r-chip); padding:10px 18px; min-height:44px; border:2px solid var(--action); background:var(--action); color:var(--action-ink); display:inline-flex; align-items:center; gap:6px; text-transform:capitalize; }
+.btn svg { width:18px; height:18px; }
+.btn.ghost { background:transparent; color:var(--action); }
+.btn:disabled { opacity:.35; cursor:not-allowed; }
+.btn.ghost[data-pending="true"] { border-color:var(--focus); background:var(--focus-fill); color:var(--focus-ink); }
+
+/* settings dialog */
+.settings { border:1px solid var(--line); border-radius:var(--r-card); background:var(--surface); color:var(--ink); padding:var(--s5); width:min(520px, calc(100vw - 32px)); display:grid; gap:var(--s4); }
+.settings[open] { display:grid; }
+.settings::backdrop { background:rgba(6, 12, 20, .6); }
+.settings fieldset { border:0; padding:0; margin:0; display:grid; gap:var(--s2); }
+.settings legend { font-family:var(--f-mono); font-size:var(--t-xs); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:0; margin-bottom:var(--s2); }
+.seg { display:inline-flex; flex-wrap:wrap; border:2px solid var(--line); border-radius:var(--r-chip); overflow:hidden; width:fit-content; }
+.seg button { appearance:none; border:0; font:inherit; font-family:var(--f-display); font-size:var(--t-sm); font-weight:500; min-height:40px; padding:6px 16px; background:var(--surface); color:var(--ink); cursor:pointer; }
+.seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
+.fields { display:grid; grid-template-columns:1fr 1fr; gap:var(--s3); }
+.fields label { display:grid; gap:4px; font-size:var(--t-sm); color:var(--muted); }
+.fields input { font:inherit; font-family:var(--f-mono); color:var(--ink); background:var(--bg); border:1.5px solid var(--line); border-radius:var(--r-chip); padding:8px 10px; min-height:44px; }
+.check { display:flex; gap:var(--s2); align-items:center; font-size:var(--t-sm); }
+.check input { width:20px; height:20px; }
+.hint { font-size:var(--t-sm); color:var(--muted); }
+
+@media (max-width:640px) {
+  .pgrid { gap:var(--s2); padding:var(--s2); }
+  .tile { padding:var(--s2); border-width:2px; border-radius:14px; }
+  .tile svg { width:32px; height:32px; }
+  .tile .l { font-size:.7rem; }
+  .msg { padding:var(--s1) var(--s2); }
+  .legend { display:none; }
+  .phase-tag { display:none; }
+}

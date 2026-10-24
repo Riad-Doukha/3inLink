@@ -1,0 +1,54 @@
+/* Nurse showcase: dark stage (night tokens) around a phone that runs the real app in its own mode. */
+.stage { position:relative; height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto minmax(0, 1fr); background:
+  radial-gradient(color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1.2px) 0 0 / 28px 28px,
+  var(--bg); color:var(--ink); }
+.stage-glow { position:absolute; border-radius:50%; pointer-events:none; filter:blur(10px); }
+.stage-glow.g1 { width:900px; height:900px; left:50%; top:52%; translate:-50% -50%; background:radial-gradient(circle, color-mix(in srgb, var(--action) 20%, transparent), transparent 62%); animation:stage-breathe 9s ease-in-out infinite; }
+.stage-glow.g2 { width:520px; height:520px; right:-160px; top:-160px; background:radial-gradient(circle, color-mix(in srgb, var(--ai) 18%, transparent), transparent 65%); }
+@keyframes stage-breathe { 0%, 100% { opacity:.8; scale:1; } 50% { opacity:1; scale:1.06; } }
+
+.stage-bar { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:var(--s4); padding:var(--s3) clamp(16px, 3vw, 40px); --brand-ink:var(--ink); --brand:var(--bg); }
+.stage-brand { display:inline-flex; align-items:center; gap:var(--s2); font-family:var(--f-display); font-weight:700; font-size:var(--t-md); color:var(--ink); text-decoration:none; }
+.stage-brand svg { width:28px; height:28px; color:var(--action); }
+
+.stage-main { position:relative; z-index:1; min-height:0; display:grid; grid-template-columns:minmax(0, 1fr) auto minmax(0, 1fr); grid-template-rows:minmax(0, 1fr); gap:clamp(24px, 4vw, 64px); padding:var(--s2) clamp(16px, 3vw, 40px) var(--s5); }
+
+/* side panels */
+.stage-side { align-self:center; display:grid; gap:var(--s4); max-width:380px; animation:stage-in .8s cubic-bezier(.2, .7, .2, 1) both; }
+.stage-side.left { justify-self:end; }
+.stage-side.right { justify-self:start; animation-delay:.2s; }
+@keyframes stage-in { from { opacity:0; translate:0 18px; } to { opacity:1; translate:0 0; } }
+.stage-eyebrow { font-family:var(--f-mono); font-size:var(--t-xs); letter-spacing:.14em; text-transform:uppercase; color:var(--action); }
+.stage-title { font-size:clamp(1.5rem, 2.4vw, 2.1rem); line-height:1.1; letter-spacing:-.02em; text-wrap:balance; }
+.stage-features { list-style:none; margin:0; padding:0; display:grid; gap:var(--s3); }
+.stage-features li { display:grid; grid-template-columns:auto 1fr; gap:var(--s3); align-items:start; padding:var(--s3); border-radius:var(--r-card); background:color-mix(in srgb, var(--surface) 70%, transparent); border:1px solid var(--line); backdrop-filter:blur(6px); animation:stage-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+.stage-features b { display:block; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); }
+.stage-features li > span:last-child > span { display:block; font-size:var(--t-xs); color:var(--muted); line-height:1.5; margin-top:2px; }
+.stage-ic { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; background:var(--tint); color:var(--action); }
+.stage-ic.urgent { background:var(--sent-fill); color:var(--sent); }
+.stage-ic svg { width:20px; height:20px; }
+
+.stage-steps { list-style:none; margin:0; padding:0; display:grid; gap:var(--s4); counter-reset:s; }
+.stage-steps li { counter-increment:s; position:relative; display:grid; gap:4px; padding-inline-start:44px; }
+.stage-steps li::before { content:counter(s); position:absolute; inset-inline-start:0; top:0; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; font-family:var(--f-mono); font-size:var(--t-sm); color:var(--action-ink); background:var(--action); }
+.stage-steps b { font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); }
+.stage-steps li > span { font-size:var(--t-xs); color:var(--muted); line-height:1.6; }
+.stage kbd { font-family:var(--f-mono); font-size:11px; padding:1px 6px; border-radius:5px; background:var(--surface-2); border:1px solid var(--line); border-bottom-width:2px; color:var(--ink); }
+.stage-btn { justify-self:start; margin-top:var(--s2); display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 16px; border-radius:var(--r-chip); border:0; background:var(--action); color:var(--action-ink); font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); cursor:pointer; transition:transform .15s; }
+.stage-btn:hover { transform:translateY(-1px); }
+.stage-btn svg { width:16px; height:16px; }
+
+.stage-qr { display:grid; grid-template-columns:auto 1fr; gap:var(--s3); align-items:center; padding:var(--s3); border-radius:var(--r-card); background:color-mix(in srgb, var(--surface) 70%, transparent); border:1px solid var(--line); }
+.stage-qr img, .stage-qr-ph { width:96px; height:96px; border-radius:10px; background:#fff; padding:4px; display:block; }
+.stage-qr b { display:block; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); }
+.stage-qr span > span { display:block; font-size:var(--t-xs); color:var(--muted); line-height:1.5; margin-top:2px; }
+
+/* phone */
+.phone-wrap { display:grid; place-items:center; min-height:0; align-self:center; animation:stage-phone 1s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes stage-phone { from { opacity:0; translate:0 40px; scale:.96; } to { opacity:1; translate:0 0; scale:1; } }
+/* Sized from the viewport (window height minus top bar and padding) so the whole frame is always visible. */
+.stage .phone { --phone-h:min(880px, calc(100vh - 112px)); --phone-h:min(880px, calc(100dvh - 112px)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-glow.g1, .stage-side, .stage-features li, .phone-wrap { animation:none; }
+}
