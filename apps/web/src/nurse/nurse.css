@@ -3,7 +3,10 @@
 .nurse { background:var(--bg); color:var(--ink); height:100vh; height:100dvh; overflow:hidden; }
 .nurse.embedded { height:100%; }
 .nurse[dir="rtl"] .n-title, .nurse[dir="rtl"] .ti { font-family:var(--f-ar); }
-.n-col { max-width:480px; margin-inline:auto; height:100%; display:grid; grid-template-rows:auto auto auto minmax(0, 1fr) auto; }
+/* Column: header and optional banner/error on top, the list takes the rest, footer always at the bottom. */
+.n-col { max-width:480px; margin-inline:auto; height:100%; display:flex; flex-direction:column; }
+.n-col > * { flex:none; }
+.n-col > .n-list { flex:1 1 auto; }
 
 .n-head { background:var(--brand); color:var(--brand-ink); padding:var(--s5) var(--s4) var(--s4); display:grid; gap:var(--s3); }
 .n-top { display:flex; justify-content:space-between; align-items:flex-start; gap:var(--s3); }
