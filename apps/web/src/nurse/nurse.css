@@ -37,14 +37,18 @@
 .n-dismiss { appearance:none; font:inherit; font-size:var(--t-sm); min-height:44px; padding:0 12px; border-radius:var(--r-chip); border:1.5px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; }
 .n-error { margin:var(--s3) var(--s3) 0; padding:var(--s2) var(--s3); border-radius:var(--r-chip); background:var(--sent-fill); color:var(--sent-ink); font-size:var(--t-sm); }
 
-.n-foot { border-top:1px solid var(--line); padding:var(--s3); display:grid; gap:var(--s2); font-size:var(--t-sm); }
-.n-foot-row { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:var(--s2); }
-.n-status { display:inline-flex; align-items:center; gap:8px; color:var(--muted); }
+/* Footer rows each fit a 320 px phone: nothing here may be wider than the column. */
+.n-foot { border-top:1px solid var(--line); padding:var(--s3); display:grid; gap:var(--s2); font-size:var(--t-sm); min-width:0; }
+.n-foot-row { display:flex; justify-content:space-between; align-items:center; gap:var(--s2); min-width:0; }
+.n-status { display:inline-flex; align-items:center; gap:8px; color:var(--muted); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.n-status i { flex:none; }
 .n-status i { width:10px; height:10px; border-radius:50%; background:var(--muted); }
 .n-status.s-live i { background:var(--focus); }
 .n-status.s-offline i { background:var(--urgent); }
-.n-tools { display:flex; flex-wrap:wrap; gap:var(--s2); align-items:center; }
-.nurse .seg { display:inline-flex; border:2px solid var(--line); border-radius:var(--r-chip); overflow:hidden; }
-.nurse .seg button { appearance:none; border:0; font:inherit; font-family:var(--f-display); font-size:var(--t-xs); font-weight:500; min-height:36px; padding:4px 12px; background:var(--surface); color:var(--ink); cursor:pointer; }
+.n-tools { display:grid; grid-template-columns:minmax(0, 2fr) minmax(0, 3fr); gap:var(--s2); }
+.nurse .seg { display:flex; min-width:0; border:2px solid var(--line); border-radius:var(--r-chip); overflow:hidden; }
+.nurse .seg button { flex:1 1 0; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; appearance:none; border:0; font:inherit; font-family:var(--f-display); font-size:var(--t-xs); font-weight:500; min-height:36px; padding:4px 8px; background:var(--surface); color:var(--ink); cursor:pointer; }
 .nurse .seg button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
-.n-reset { appearance:none; font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-xs); min-height:36px; padding:4px 12px; border-radius:var(--r-chip); border:2px solid var(--action); background:transparent; color:var(--action); cursor:pointer; }
+.n-foot .demo-switch { display:flex; flex-wrap:wrap; width:100%; border-radius:var(--r-chip); }
+.n-foot .demo-switch a { flex:1 1 auto; justify-content:center; padding:0 8px; white-space:nowrap; }
+.n-reset { flex:none; white-space:nowrap; appearance:none; font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-xs); min-height:36px; padding:4px 12px; border-radius:var(--r-chip); border:2px solid var(--action); background:transparent; color:var(--action); cursor:pointer; }

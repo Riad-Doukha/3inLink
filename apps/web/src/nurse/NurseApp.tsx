@@ -184,7 +184,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
         <footer className="n-foot">
           <div className="n-foot-row">
             <span className={`n-status s-${status}`}><i />{t[status]}</span>
-            {!embedded && <DemoSwitch current="#/nurse" />}
+            <button className="n-reset" onClick={() => void reset()}>{t.reset}</button>
           </div>
           <div className="n-tools">
             <div className="seg" role="group" aria-label={t.language}>
@@ -193,11 +193,11 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
               ))}
             </div>
             <div className="seg" role="group">
-              <button aria-pressed={prefs.mode === 'day'} onClick={() => updatePrefs({ mode: 'day' })}>{t.day}</button>
-              <button aria-pressed={prefs.mode === 'night'} onClick={() => updatePrefs({ mode: 'night' })}>{t.night}</button>
+              <button aria-pressed={prefs.mode === 'day'} onClick={() => updatePrefs({ mode: 'day' })} title={t.day}>{t.day}</button>
+              <button aria-pressed={prefs.mode === 'night'} onClick={() => updatePrefs({ mode: 'night' })} title={t.night}>{t.night}</button>
             </div>
-            <button className="n-reset" onClick={() => void reset()}>{t.reset}</button>
           </div>
+          {!embedded && <DemoSwitch current="#/nurse" />}
         </footer>
       </div>
     </div>
