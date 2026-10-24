@@ -18,6 +18,9 @@
 .n-tabs button[aria-selected="true"] { background:var(--brand-ink); color:var(--brand); }
 
 .n-list { padding:var(--s3); display:grid; gap:var(--s3); align-content:start; min-height:0; overflow-y:auto; overscroll-behavior:contain; }
+/* phone-style list: scrolls by touch or wheel without a desktop scrollbar squeezing the cards */
+.n-list { scrollbar-width:none; }
+.n-list::-webkit-scrollbar { display:none; }
 .acard { appearance:none; font:inherit; text-align:start; color:var(--ink); width:100%; cursor:pointer; background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r-card); padding:var(--s3); display:grid; grid-template-columns:auto minmax(0, 1fr) auto; gap:var(--s3); align-items:start; min-height:72px; }
 /* the middle column may shrink below its content so long titles and chips wrap inside the card */
 .acard > span:nth-child(2), .n-banner > span:nth-child(2) { min-width:0; }

@@ -67,8 +67,10 @@ function supabaseStore(): AlertStore {
     },
     subscribe(onChange, onStatus) {
       onStatus('connecting');
+      // A unique topic per subscription: re-subscribing under the same name (React remounts, two nurse
+      // views on one page) lets the server's close of the old channel kill the new one.
       const channel = db
-        .channel('alerts-feed')
+        .channel(`alerts-feed-${crypto.randomUUID()}`)
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'alerts' }, (p) =>
           onChange({ type: 'insert', alert: fromRow(p.new as AlertRow) }))
         .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'alerts' }, (p) =>

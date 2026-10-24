@@ -144,7 +144,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
               <span className="ti">{STAFF_MESSAGES[banner.command][prefs.lang]}</span>
               <span className="chips">
                 <span className="chip" dir="ltr">ID {banner.patientCode}</span>
-                <span className="chip room">{t.room} {banner.room}</span>
+                <span className="chip room">{t.room} <bdi dir="ltr">{banner.room}</bdi></span>
               </span>
             </span>
             <button className="n-dismiss" onClick={() => setBanner(null)}>{t.dismiss}</button>
@@ -171,7 +171,7 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
                   <span className="ti">{STAFF_MESSAGES[a.command][prefs.lang]}</span>
                   <span className="chips">
                     <span className="chip" dir="ltr">ID {a.patientCode}</span>
-                    <span className="chip room">{t.room} {a.room}</span>
+                    <span className="chip room">{t.room} <bdi dir="ltr">{a.room}</bdi></span>
                   </span>
                 </span>
                 <span className={`tm${late ? ' late' : ''}`}>{elapsed(a)}</span>
