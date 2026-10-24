@@ -1,5 +1,5 @@
 /* Demo room: the real classifier output drives the patient screen; alerts land on the nurse phone. Night stage. */
-.room { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto auto minmax(0, 1fr) auto auto; gap:var(--s3); padding:0 clamp(12px, 2vw, 28px) var(--s3); color:var(--ink); background:
+.room { height:100vh; height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto auto minmax(0, 1fr); gap:var(--s3); padding:0 clamp(12px, 2vw, 28px) var(--s3); color:var(--ink); background:
   radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--action) 14%, transparent), transparent 60%),
   radial-gradient(color-mix(in srgb, var(--line) 50%, transparent) 1px, transparent 1.2px) 0 0 / 28px 28px,
   var(--bg); }
@@ -24,37 +24,60 @@
 .room-time { font-family:var(--f-mono); font-size:var(--t-xs); color:var(--muted); min-width:96px; text-align:end; font-variant-numeric:tabular-nums; }
 .room-error { padding:var(--s2) var(--s3); border-radius:var(--r-chip); background:var(--sent-fill); color:var(--sent-ink); font-size:var(--t-sm); }
 
-/* screens */
-.room-main { min-height:0; display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:clamp(16px, 2.5vw, 40px); align-items:stretch; container-type:size; }
-.room-monitor, .room-phone { min-height:0; display:grid; grid-template-rows:minmax(0, 1fr) auto; gap:var(--s2); justify-items:center; }
-.monitor { height:100%; max-width:100%; aspect-ratio:16 / 10; padding:10px; border-radius:18px; background:linear-gradient(160deg, #26303c, #0a0f16 45%, #1a2330); box-shadow:0 0 0 1.5px #3b4757, 0 30px 60px -30px rgba(0,0,0,.8); }
+/* layout: signal + eye on the left, patient screen on the right */
+.room-main { min-height:0; display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1.45fr); gap:clamp(14px, 2vw, 32px); }
+.room-left { min-height:0; display:grid; grid-template-rows:auto minmax(0, 1fr); gap:var(--s3); }
+.room-right { min-height:0; display:grid; grid-template-rows:minmax(0, 1fr) auto; gap:var(--s2); }
+
+.room-panel { min-height:0; display:grid; gap:var(--s2); align-content:start; padding:var(--s3) var(--s4); border-radius:var(--r-card); background:color-mix(in srgb, var(--surface) 75%, transparent); border:1px solid var(--line); backdrop-filter:blur(6px); }
+.room-panel-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--s1) var(--s3); font-size:var(--t-xs); color:var(--muted); }
+.room-panel-head b { color:var(--ink); font-family:var(--f-display); }
+.room-note { color:var(--focus-ink); }
+
+/* signal */
+.plot { display:block; width:100%; height:clamp(120px, 22vh, 220px); }
+.room-strip { list-style:none; margin:0; padding:0; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:3px; }
+.room-strip li { min-width:0; text-align:center; padding:4px 0; border-radius:5px; font-family:var(--f-mono); font-size:10px; font-weight:500; background:var(--surface-2); color:var(--muted); border:1px solid transparent; opacity:.6; transition:opacity .3s, background .3s, border-color .3s, color .3s; }
+.room-strip li.done { opacity:1; }
+.room-strip li.done.move { background:var(--focus-fill); border-color:var(--focus); color:var(--focus-ink); }
+.room-strip li.done.send { background:var(--sent-fill); border-color:var(--sent); color:var(--sent-ink); font-weight:700; }
+.room-last { font-size:var(--t-sm); color:var(--muted); min-height:1.6em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.room-last b { color:var(--ink); font-family:var(--f-display); }
+.room-last .mono { font-family:var(--f-mono); font-size:var(--t-xs); }
+.room-last .out.move { color:var(--focus-ink); font-weight:600; }
+.room-last .out.send { color:var(--sent); font-weight:700; }
+
+/* eye */
+.room-eye { grid-template-rows:auto minmax(0, 1fr); align-content:stretch; }
+.eye-sim { min-height:0; display:grid; grid-template-rows:auto minmax(0, 1fr) auto auto; justify-items:center; align-items:center; gap:var(--s1); }
+.eye-svg { width:min(100%, 360px); height:100%; min-height:0; max-height:220px; overflow:visible; }
+.eye-white { fill:var(--surface); }
+.eye-outline { fill:none; stroke:var(--panel-focus); stroke-width:2.5; }
+.eye-iris { fill:var(--action); }
+.eye-pupil { fill:var(--panel); }
+.eye-glint { fill:var(--panel-ink); opacity:.85; }
+.eye-lid { fill:var(--surface-2); }
+.eye-dir { font-family:var(--f-mono); font-size:var(--t-xs); letter-spacing:.1em; color:var(--muted); padding:2px 10px; border-radius:99px; border:1px solid var(--line); transition:color .15s, background .15s, border-color .15s; }
+.eye-sim[data-gaze="up"] .eye-dir.up, .eye-sim[data-gaze="down"] .eye-dir.down { color:var(--focus-ink); background:var(--focus-fill); border-color:var(--focus); }
+.eye-sim[data-gaze="blink"] .eye-outline { stroke:var(--sent); }
+.eye-state { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--s1) var(--s3); font-size:var(--t-sm); color:var(--muted); }
+.eye-state b { font-family:var(--f-display); color:var(--ink); }
+.eye-sim[data-gaze="blink"] .eye-state b { color:var(--sent); }
+
+/* patient screen in a monitor, as large as the column allows at 16:10 */
+.monitor-fit { min-height:0; container-type:size; display:grid; place-items:center; }
+.monitor { width:min(100cqw, 100cqh * 1.6); aspect-ratio:16 / 10; padding:10px; border-radius:18px; background:linear-gradient(160deg, #26303c, #0a0f16 45%, #1a2330); box-shadow:0 0 0 1.5px #3b4757, 0 30px 60px -30px rgba(0,0,0,.8); }
 .monitor-screen { width:100%; height:100%; border-radius:10px; background:#000; }
-.room-phone .phone { --phone-h:calc(100cqh - 40px); }
 .room-caption { font-size:var(--t-xs); color:var(--muted); text-align:center; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:var(--s2); }
 .room-caption b { color:var(--ink); font-family:var(--f-display); }
-.room-link { min-height:28px; padding:0 10px; font-size:var(--t-xs); }
+.room-link { min-height:30px; padding:0 12px; font-size:var(--t-xs); }
 
-/* signal and timeline */
-.room-signal { display:grid; gap:var(--s2); padding:var(--s3) var(--s4); border-radius:var(--r-card); background:color-mix(in srgb, var(--surface) 75%, transparent); border:1px solid var(--line); backdrop-filter:blur(6px); }
-.room-signal-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--s2); font-size:var(--t-xs); color:var(--muted); }
-.room-signal-head b { color:var(--ink); font-family:var(--f-display); }
-.room-note { color:var(--focus-ink); }
-.plot { display:block; width:100%; height:clamp(110px, 16vh, 170px); }
-.room-timeline { list-style:none; margin:0; padding:0; display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:4px; }
-.room-timeline li { min-width:0; display:grid; gap:1px; padding:5px 6px; border-radius:6px; background:var(--surface-2); border:1px solid transparent; font-size:10px; line-height:1.25; opacity:.55; transition:opacity .3s, background .3s, border-color .3s; }
-.room-timeline li.done { opacity:1; }
-.room-timeline li.done.move { background:var(--focus-fill); border-color:var(--focus); }
-.room-timeline li.done.send { background:var(--sent-fill); border-color:var(--sent); }
-.tl-label { font-family:var(--f-mono); font-weight:500; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.tl-out { color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.room-timeline li.done.move .tl-out { color:var(--focus-ink); }
-.room-timeline li.done.send .tl-out { color:var(--sent-ink); font-weight:700; }
-.room-narrow { font-size:var(--t-sm); color:var(--muted); text-align:center; }
-.room-narrow a { color:var(--action); }
-
-@media (max-width:1099px), (max-height:659px) {
+/* narrow or short screens: stack, page scrolls */
+@media (max-width:1023px), (max-height:639px) {
   .room { height:auto; min-height:100dvh; overflow:visible; grid-template-rows:auto; }
-  .room-main { grid-template-columns:1fr; container-type:normal; }
-  .monitor { height:auto; width:100%; }
-  .room-timeline { grid-auto-flow:row; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); }
+  .room-main { grid-template-columns:1fr; }
+  .room-right { order:-1; }
+  .monitor-fit { container-type:inline-size; }
+  .monitor { width:100%; }
+  .eye-svg { height:auto; max-height:180px; }
 }

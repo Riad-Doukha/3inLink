@@ -1,22 +1,24 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   DECISION_TEXT, ORDER, PATIENT_MESSAGES, decisionToInput, initialHci, reduceHci,
-  type Decision, type HciInput, type HciState, type Session, type SessionIndexEntry,
+  type Decision, type DecisionLabel, type HciInput, type HciState, type Session, type SessionIndexEntry,
 } from '@3inlink/core';
 import { BrandMark, Icon } from '@3inlink/design-tokens';
 import { DemoSwitch } from '../lib/DemoSwitch';
-import { PhoneFrame } from '../lib/PhoneFrame';
 import { Scaled } from '../lib/Scaled';
-import { useMedia } from '../lib/useMedia';
 import { publishGaze } from '../lib/gazeBus';
 import { alertStore } from '../lib/alertStore';
 import { PatientScreen } from '../patient/PatientScreen';
-import { NurseApp } from '../nurse/NurseApp';
 import { ReplayClock } from './ReplayClock';
 import { SignalPlot } from './SignalPlot';
+import { EyeSim } from './EyeSim';
 import './demo.css';
 
 const BASE = import.meta.env.BASE_URL;
+
+const SHORT: Record<DecisionLabel, string> = {
+  up: 'UP', down: 'DN', left: 'L', right: 'R', straight: '—', blink: 'B', double_blink: 'DB',
+};
 
 /** What a decision did on the patient screen, for the timeline. */
 interface Outcome { kind: 'move' | 'send' | 'none'; text: string }
@@ -38,7 +40,6 @@ function outcome(prev: HciState, next: HciState, input: HciInput | null): Outcom
 }
 
 export function DemoRoom() {
-  const wide = useMedia('(min-width: 1100px) and (min-height: 660px)');
   const [index, setIndex] = useState<SessionIndexEntry[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -113,6 +114,8 @@ export function DemoRoom() {
   };
 
   const meta = session?.meta;
+  const lastDecision = session?.decisions.filter((d) => d.t <= view.t).at(-1);
+  const last = lastDecision && outcomes[lastDecision.t] ? { d: lastDecision, o: outcomes[lastDecision.t]! } : null;
   const ended = !!meta && view.t >= meta.duration_s;
 
   return (
@@ -146,51 +149,54 @@ export function DemoRoom() {
       {error && <p className="room-error" role="alert">{error}</p>}
 
       <main className="room-main">
-        <div className="room-monitor">
-          <div className="monitor">
-            <Scaled width={1280} className="monitor-screen">
-              <PatientScreen embedded />
-            </Scaled>
-          </div>
-          <p className="room-caption"><b>Patient screen</b> driven by the classifier. Up and down move around the ring, a double blink sends.</p>
-        </div>
-        {wide && (
-          <div className="room-phone">
-            <PhoneFrame label="Nurse app on a phone">
-              <NurseApp embedded />
-            </PhoneFrame>
-            <p className="room-caption"><b>Nurse app</b> receives each sent message live.
-              <button className="room-link" onClick={() => void alertStore.reset()}>Reset board</button>
+        <div className="room-left">
+          <section className="room-panel room-signal" aria-label="EOG signal and classifier decisions">
+            <div className="room-panel-head">
+              <span><b>EOG signal</b> · {meta ? `one classifier decision every ${meta.hop_s} s, on the last ${meta.window_s} s` : ''}</span>
+              {meta?.note && <span className="room-note">{meta.note}</span>}
+            </div>
+            {session && clock ? <SignalPlot session={session} clock={clock} /> : <div className="plot" />}
+            <ol className="room-strip" aria-label="Classifier decisions">
+              {session?.decisions.map((d) => {
+                const o = outcomes[d.t];
+                const done = d.t <= view.t && o;
+                return (
+                  <li key={d.t} className={done ? `done ${o.kind}` : ''} title={`${d.t} s · ${DECISION_TEXT[d.label]}${done ? ` → ${o.text}` : ''}`}>
+                    {SHORT[d.label]}
+                  </li>
+                );
+              })}
+            </ol>
+            <p className="room-last" aria-live="polite">
+              {last
+                ? <><span className="mono">{last.d.t.toFixed(1)} s</span> <b>{DECISION_TEXT[last.d.label]}</b> ({last.d.confidence.toFixed(2)}) → <span className={`out ${last.o.kind}`}>{last.o.text}</span></>
+                : 'The first decision comes after 3 seconds of signal.'}
             </p>
-          </div>
-        )}
-      </main>
+          </section>
 
-      <section className="room-signal" aria-label="EOG signal and classifier decisions">
-        <div className="room-signal-head">
-          <span><b>EOG signal</b> · horizontal channel · {meta ? `one decision every ${meta.hop_s} s on the last ${meta.window_s} s` : ''}</span>
-          {meta?.note && <span className="room-note">{meta.note}</span>}
+          <section className="room-panel room-eye" aria-label="Simulated eye">
+            <div className="room-panel-head">
+              <span><b>The eye</b> · reconstructed from the signal above</span>
+            </div>
+            {session && clock && <EyeSim session={session} clock={clock} />}
+          </section>
         </div>
-        {session && clock ? <SignalPlot session={session} clock={clock} /> : <div className="plot" />}
-        <ol className="room-timeline">
-          {session?.decisions.map((d) => {
-            const o = outcomes[d.t];
-            const done = d.t <= view.t && o;
-            return (
-              <li key={d.t} className={done ? `done ${o.kind}` : ''} title={`${d.t} s · ${DECISION_TEXT[d.label]}`}>
-                <span className="tl-label">{DECISION_TEXT[d.label]}</span>
-                <span className="tl-out">{done ? o.text : `${d.t} s`}</span>
-              </li>
-            );
-          })}
-        </ol>
-      </section>
 
-      {!wide && (
-        <p className="room-narrow">
-          On a small screen the nurse phone is hidden. <a href="#/nurse">Open the nurse app</a> on another device to receive the alerts.
-        </p>
-      )}
+        <div className="room-right">
+          <div className="monitor-fit">
+            <div className="monitor">
+              <Scaled width={1280} className="monitor-screen">
+                <PatientScreen embedded />
+              </Scaled>
+            </div>
+          </div>
+          <p className="room-caption">
+            <b>Patient screen</b> follows the classifier: up and down move around the ring, a double blink sends to the nurses.
+            <button className="room-link" onClick={() => window.open('#/nurse', '3inlink-nurse', 'width=520,height=900')}>Open nurse app</button>
+            <button className="room-link" onClick={() => void alertStore.reset()}>Reset nurse board</button>
+          </p>
+        </div>
+      </main>
     </div>
   );
 }
