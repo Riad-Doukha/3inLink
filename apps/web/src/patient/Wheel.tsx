@@ -9,11 +9,12 @@ import { Icon } from '@3inlink/design-tokens';
  * and the wheel wraps like the ring it replaces.
  */
 
-/** Visible offsets from the selection, top to bottom, and each slot's relative height. */
+/** Visible offsets from the selection, top to bottom, and each slot's relative height.
+    Only two messages show above and below the selection; more moving rows made the wheel tiring to watch. */
 const SLOTS: { offset: number; size: number }[] = [
-  { offset: -3, size: 0.8 }, { offset: -2, size: 0.95 }, { offset: -1, size: 1.15 },
-  { offset: 0, size: 2.7 },
-  { offset: 1, size: 1.15 }, { offset: 2, size: 0.95 }, { offset: 3, size: 0.8 }, { offset: 4, size: 0.6 },
+  { offset: -2, size: 1 }, { offset: -1, size: 1.2 },
+  { offset: 0, size: 2.6 },
+  { offset: 1, size: 1.2 }, { offset: 2, size: 1 },
 ];
 const TOTAL = SLOTS.reduce((a, s) => a + s.size, 0);
 const GEOMETRY = new Map<number, { top: number; height: number }>();
@@ -21,6 +22,11 @@ SLOTS.reduce((top, s) => {
   GEOMETRY.set(s.offset, { top: (top / TOTAL) * 100, height: (s.size / TOTAL) * 100 });
   return top + s.size;
 }, 0);
+// hidden rows wait just past the edges, so they fade in from the right side when they become visible
+const EDGE = (1 / TOTAL) * 100;
+GEOMETRY.set(-3, { top: -EDGE, height: EDGE });
+GEOMETRY.set(3, { top: 100, height: EDGE });
+GEOMETRY.set(4, { top: 100, height: EDGE });
 
 /** Offset of ring index i from the selection, in -3..4. */
 const offsetOf = (i: number, cur: number) => ((i - cur + 8 + 3) % 8) - 3;
@@ -51,6 +57,7 @@ export function Wheel({ cur, status, caption, panelLines, onSelect }: Props) {
       {items.map(({ c, i, offset, jump }) => {
         const g = GEOMETRY.get(offset)!;
         const isCenter = offset === 0;
+        const hidden = Math.abs(offset) > 2;
         const state = isCenter && cur !== null ? (status === 'sent' ? 'sent' : 'focus') : 'idle';
         return (
           <button
@@ -59,6 +66,8 @@ export function Wheel({ cur, status, caption, panelLines, onSelect }: Props) {
             data-d={Math.abs(offset)}
             data-state={state}
             aria-current={state !== 'idle' ? 'true' : undefined}
+            aria-hidden={hidden || undefined}
+            tabIndex={hidden ? -1 : undefined}
             style={{ top: `calc(${g.top}% + 3px)`, height: `calc(${g.height}% - 6px)` }}
             onClick={() => onSelect(i)}
           >
