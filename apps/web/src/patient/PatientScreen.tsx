@@ -9,6 +9,7 @@ import { speak } from './speech';
 import { alertStore, type NewAlert } from '../lib/alertStore';
 import { loadSettings, saveSettings, type PatientSettings } from './settings';
 import { SettingsDialog } from './SettingsDialog';
+import { Wheel } from './Wheel';
 import { DemoSwitch } from '../lib/DemoSwitch';
 import { subscribeGaze } from '../lib/gazeBus';
 import './patient.css';
@@ -140,36 +141,46 @@ export function PatientScreen({ embedded = false }: { embedded?: boolean }) {
         </span>
       </header>
 
-      <main
-        className="pgrid"
-        aria-label={settings.phase === 1
-          ? 'Eight communication symbols around the message panel. Up and down arrows go around, Space blinks.'
-          : 'Eight communication symbols around the message panel. Arrow keys move, Space blinks.'}
-      >
-        {ORDER.map((c, i) => {
-          const state = hci.cur === i ? (sent ? 'sent' : 'focus') : 'idle';
-          return (
-            <button
-              key={c}
-              className={`tile p${i}`}
-              data-state={state}
-              aria-current={state !== 'idle' ? 'true' : undefined}
-              onClick={() => input({ type: 'select', index: i })}
-            >
-              <span className="d">{String(i + 1).padStart(2, '0')}</span>
-              <Icon name={c} />
-              <span className="l">{PATIENT_MESSAGES[c].en}</span>
-            </button>
-          );
-        })}
-
-        <section className="msg" data-state={sent ? 'sent' : hci.status} aria-live="polite">
-          <div className="cap">{caption}</div>
-          <div className="en">{panelLines.en}</div>
-          <div className="ar" lang="ar" dir="rtl">{panelLines.ar}</div>
-          <div className="fr" lang="fr">{panelLines.fr}</div>
-        </section>
-      </main>
+      {settings.phase === 1 ? (
+        <main className="pwheel" aria-label="Eight messages stacked vertically. Up and down arrows move, Space blinks.">
+          <Wheel
+            cur={hci.cur}
+            status={hci.status}
+            caption={cmd === null ? `${PANEL_TEXT.capIdle} · look up or down` : caption}
+            panelLines={panelLines}
+            onSelect={(i) => input({ type: 'select', index: i })}
+          />
+        </main>
+      ) : (
+        <main
+          className="pgrid"
+          aria-label="Eight communication symbols around the message panel. Arrow keys move, Space blinks."
+        >
+          {ORDER.map((c, i) => {
+            const state = hci.cur === i ? (sent ? 'sent' : 'focus') : 'idle';
+            return (
+              <button
+                key={c}
+                className={`tile p${i}`}
+                data-state={state}
+                aria-current={state !== 'idle' ? 'true' : undefined}
+                onClick={() => input({ type: 'select', index: i })}
+              >
+                <span className="d">{String(i + 1).padStart(2, '0')}</span>
+                <Icon name={c} />
+                <span className="l">{PATIENT_MESSAGES[c].en}</span>
+              </button>
+            );
+          })}
+  
+          <section className="msg" data-state={sent ? 'sent' : hci.status} aria-live="polite">
+            <div className="cap">{caption}</div>
+            <div className="en">{panelLines.en}</div>
+            <div className="ar" lang="ar" dir="rtl">{panelLines.ar}</div>
+            <div className="fr" lang="fr">{panelLines.fr}</div>
+          </section>
+        </main>
+      )}
 
       <footer className="legend">
         <span><i />Idle</span>
