@@ -150,3 +150,9 @@
   .tile { grid-template-rows:minmax(0, 1fr) auto; }
   .tile svg { width:26px; height:26px; }
 }
+
+/* narrow screens: the menu button sits at the far end of the first row, like the other screens */
+@media (max-width:720px) {
+  .bar-start { width:100%; }
+  .bar-start > .nav-burger { margin-inline-start:auto; }
+}
