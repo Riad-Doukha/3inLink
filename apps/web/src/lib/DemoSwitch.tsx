@@ -3,6 +3,7 @@ import './demoSwitch.css';
 const LINKS = [
   { href: '#/', label: 'Home' },
   { href: '#/demo', label: 'Live demo' },
+  { href: '#/hardware', label: 'Hardware' },
   { href: '#/patient', label: 'Patient' },
   { href: '#/nurse', label: 'Nurse' },
 ] as const;

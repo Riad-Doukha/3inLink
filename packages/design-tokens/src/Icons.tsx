@@ -40,6 +40,35 @@ const PATHS = {
     </>
   ),
   check: <path className="ico" d="M5 12.5l4.5 4.5L19 7.5" />,
+  /* hardware */
+  chip: (
+    <>
+      <rect className="ico" x="6" y="6" width="12" height="12" rx="2" />
+      <path className="ico" d="M9.5 6V3M14.5 6V3M9.5 21v-3M14.5 21v-3M6 9.5H3M6 14.5H3M21 9.5h-3M21 14.5h-3M10 10h4v4h-4z" />
+    </>
+  ),
+  battery: (
+    <>
+      <rect className="ico" x="3" y="7.5" width="16" height="9" rx="2" />
+      <path className="ico" d="M21 10.5v3M6 10.5v3M9 10.5v3M12 10.5v3" />
+    </>
+  ),
+  shield: <path className="ico" d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6zM8.8 12l2.2 2.2 4.2-4.4" />,
+  eye: (
+    <>
+      <path className="ico" d="M2.5 12C5 7.5 8.2 5.5 12 5.5s7 2 9.5 6.5c-2.5 4.5-5.7 6.5-9.5 6.5S5 16.5 2.5 12z" />
+      <circle className="ico" cx="12" cy="12" r="3" />
+    </>
+  ),
+  feather: <path className="ico" d="M20 4c-7 0-12.5 4.5-13.5 12.5L5 19M20 4c0 6-3.5 10.5-9.5 11.5M20 4l-9 9M7.5 15h5" />,
+  usb: (
+    <>
+      <rect className="ico" x="3" y="8.5" width="18" height="7" rx="3.5" />
+      <path className="ico" d="M8 12h8" />
+    </>
+  ),
+  bluetooth: <path className="ico" d="M7 7.5l10 9-5 4.5V3l5 4.5-10 9" />,
+  power: <path className="ico" d="M12 3.5v8M7.2 6.6a7.5 7.5 0 1 0 9.6 0" />,
   play: <path className="ico" d="M8 5.5v13l10.5-6.5z" />,
   pause: <path className="ico" d="M8.5 5.5v13M15.5 5.5v13" />,
   speaker: <path className="ico" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5zM15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" />,

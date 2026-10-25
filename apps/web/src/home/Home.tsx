@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from
 import { ORDER, PATIENT_MESSAGES, POS } from '@3inlink/core';
 import { BrandMark, Icon } from '@3inlink/design-tokens';
 import { prefersReducedMotion, useCountUp, useScrollEffects } from './motion';
+import { FaceDiagram } from '../hardware/FaceDiagram';
+import { DEVICE_STATUS, ELECTRODES, FEATURES } from '../hardware/device';
 import './home.css';
 
 /** Stagger index for [data-reveal] children. */
@@ -133,6 +135,7 @@ export function Home() {
         <nav aria-label="Sections">
           <a href="#try" onClick={scrollTo('try')}>Try it</a>
           <a href="#how" onClick={scrollTo('how')}>How it works</a>
+          <a href="#device" onClick={scrollTo('device')}>The device</a>
           <a href="#who" onClick={scrollTo('who')}>Who it helps</a>
         </nav>
         <span className="h-progress" aria-hidden="true" />
@@ -211,6 +214,33 @@ export function Home() {
             <Fact i={0} to={99.4} decimals={1} suffix="%" label="accuracy of the LDA classifier on 182 recordings from 21 people (5-fold cross-validation)" />
             <Fact i={1} to={8} label="messages, from “I feel pain” to “Call my family”" />
             <Fact i={2} to={3} label="languages with equal rank: English, Arabic, French" />
+          </div>
+        </section>
+
+        <section className="h-sec" id="device">
+          <div className="h-sec-head">
+            <p className="h-eyebrow" data-reveal>The device · {DEVICE_STATUS.split(' · ')[1]}</p>
+            <h2 data-reveal style={st(1)}>A light mask, a module behind the ear</h2>
+            <p className="h-sub" data-reveal style={st(2)}>
+              Five electrodes around the eye pick up the signal. The module amplifies, filters and digitises it,
+              then sends it over Bluetooth. No camera, and it runs on a rechargeable battery.
+            </p>
+          </div>
+          <div className="h-device">
+            <div className="h-device-art" data-reveal data-reveal-kind="zoom"><FaceDiagram view="front" /></div>
+            <div className="h-device-side">
+              <ul className="h-device-els">
+                {ELECTRODES.map((e, i) => (
+                  <li key={e.id} className={`k-${e.kind}`} data-reveal style={st(i)}><span className="hw-el-dot" /><b>{e.label}</b><span>{e.placement}</span></li>
+                ))}
+              </ul>
+              <div className="h-device-feats">
+                {FEATURES.map((f, i) => (
+                  <span key={f.title} data-reveal style={st(i)}><Icon name={f.icon} />{f.title}</span>
+                ))}
+              </div>
+              <a className="h-device-go" href="#/hardware" data-reveal>Explore the hardware <Icon name="right" /></a>
+            </div>
           </div>
         </section>
 

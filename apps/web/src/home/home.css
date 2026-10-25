@@ -187,3 +187,19 @@ kbd { font-family:var(--f-mono); font-size:var(--t-xs); min-width:26px; text-ali
   .h-sec h2 { font-size:1.5rem; }
   .h-facts b { font-size:1.9rem; }
 }
+
+/* the device teaser */
+.h-device { display:grid; gap:var(--s5); grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items:center; }
+.h-device-art { padding:var(--s4); border-radius:var(--r-tile); background:var(--surface); border:1px solid var(--line); max-width:420px; width:100%; justify-self:center; }
+.h-device-side { display:grid; gap:var(--s4); min-width:0; }
+.h-device-els { list-style:none; margin:0; padding:0; display:grid; gap:var(--s2); }
+.h-device-els li { display:grid; grid-template-columns:auto 44px minmax(0, 1fr); align-items:center; gap:var(--s2); font-size:var(--t-sm); }
+.h-device-els b { font-family:var(--f-mono); }
+.h-device-els span:last-child { color:var(--muted); }
+.h-device-els .hw-el-dot { width:14px; height:14px; border-radius:50%; border:2px solid #0b1016; }
+.h-device-els .k-v .hw-el-dot { background:#E5B300; } .h-device-els .k-h .hw-el-dot { background:#3D8BFD; } .h-device-els .k-ref .hw-el-dot { background:#2EB872; }
+.h-device-feats { display:flex; flex-wrap:wrap; gap:var(--s2); }
+.h-device-feats span { display:inline-flex; align-items:center; gap:6px; font-size:var(--t-xs); padding:6px 10px; border-radius:99px; background:var(--tint); }
+.h-device-feats svg { width:16px; height:16px; color:var(--action); }
+.h-device-go { justify-self:start; display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 18px; border-radius:var(--r-chip); background:var(--action); color:var(--action-ink) !important; font-family:var(--f-display); font-weight:600; font-size:var(--t-sm); text-decoration:none; }
+.h-device-go svg { width:18px; height:18px; }
