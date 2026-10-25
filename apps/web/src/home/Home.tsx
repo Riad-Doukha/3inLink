@@ -4,6 +4,7 @@ import { BrandMark, Icon } from '@3inlink/design-tokens';
 import { prefersReducedMotion, useCountUp, useScrollEffects } from './motion';
 import { FaceDiagram } from '../hardware/FaceDiagram';
 import { DEVICE_STATUS, ELECTRODES, FEATURES } from '../hardware/device';
+import { DemoSwitch } from '../lib/DemoSwitch';
 import './home.css';
 
 /** Stagger index for [data-reveal] children. */
@@ -138,6 +139,10 @@ export function Home() {
           <a href="#device" onClick={scrollTo('device')}>The device</a>
           <a href="#who" onClick={scrollTo('who')}>Who it helps</a>
         </nav>
+        <DemoSwitch current="#/" drawerOnly sections={[
+          { id: 'try', label: 'Try it' }, { id: 'how', label: 'How it works' },
+          { id: 'device', label: 'The device' }, { id: 'who', label: 'Who it helps' },
+        ]} />
         <span className="h-progress" aria-hidden="true" />
       </header>
 

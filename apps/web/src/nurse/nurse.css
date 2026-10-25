@@ -63,3 +63,5 @@
 
 /* Arabic letters join: no letter-spacing or uppercase styling on the mono captions */
 .nurse[lang="ar"] .n-ward, .nurse[lang="ar"] .n-banner-cap { font-family:var(--f-ar); letter-spacing:0; text-transform:none; }
+
+.n-top-end { display:flex; align-items:center; gap:var(--s2); }

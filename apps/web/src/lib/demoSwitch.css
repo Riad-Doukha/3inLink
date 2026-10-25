@@ -13,3 +13,28 @@
 .demo-switch.surface a { color:var(--ink); }
 .demo-switch.surface a:hover { background:var(--tint); }
 .demo-switch.surface a[aria-current="page"] { background:var(--ink); color:var(--bg); }
+
+/* menu button (narrow screens) */
+.nav-burger { display:inline-grid; place-items:center; width:44px; height:44px; flex:none; border-radius:var(--r-chip); cursor:pointer; background:transparent; }
+.nav-burger svg { width:22px; height:22px; }
+.nav-burger.surface { border:1.5px solid var(--line); color:var(--ink); }
+.nav-burger.brand { border:1px solid color-mix(in srgb, var(--brand-ink) 40%, transparent); color:var(--brand-ink); }
+
+/* drawer: slides in from the right, full height */
+.nav-drawer { margin:0 0 0 auto; padding:0; border:0; height:100dvh; max-height:none; width:min(320px, 86vw); max-width:none; background:var(--surface); color:var(--ink); box-shadow:-20px 0 50px -20px rgba(0, 0, 0, .45); }
+.nav-drawer[open] { animation:nav-in .25s cubic-bezier(.2, .7, .2, 1); }
+.nav-drawer::backdrop { background:rgba(6, 12, 20, .55); }
+@keyframes nav-in { from { transform:translateX(100%); } to { transform:none; } }
+.nav-drawer-inner { min-height:100%; display:flex; flex-direction:column; gap:var(--s5); padding:var(--s4); }
+.nav-drawer-head { display:flex; justify-content:space-between; align-items:center; }
+.nav-drawer-brand { display:inline-flex; align-items:center; gap:var(--s2); font-family:var(--f-display); font-weight:700; font-size:var(--t-md); }
+.nav-drawer-brand svg { width:26px; height:26px; color:var(--action); }
+.nav-close { display:grid; place-items:center; width:44px; height:44px; border-radius:var(--r-chip); border:1.5px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; }
+.nav-close svg { width:20px; height:20px; }
+.nav-drawer-title { font-family:var(--f-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:var(--s2); }
+.nav-drawer ul { list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+.nav-drawer li a, .nav-drawer li button { display:flex; align-items:center; width:100%; min-height:48px; padding:0 var(--s3); border-radius:var(--r-chip); border:0; background:transparent; color:var(--ink); font:inherit; font-family:var(--f-display); font-weight:600; font-size:var(--t-base); text-align:start; text-decoration:none; cursor:pointer; }
+.nav-drawer li a:hover, .nav-drawer li button:hover { background:var(--tint); }
+.nav-drawer li a[aria-current="page"] { background:var(--ink); color:var(--bg); }
+.nav-drawer-foot { margin-top:auto; font-size:var(--t-xs); color:var(--muted); }
+@media (prefers-reduced-motion: reduce) { .nav-drawer[open] { animation:none; } }

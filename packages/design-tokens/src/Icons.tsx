@@ -69,6 +69,8 @@ const PATHS = {
   ),
   bluetooth: <path className="ico" d="M7 7.5l10 9-5 4.5V3l5 4.5-10 9" />,
   power: <path className="ico" d="M12 3.5v8M7.2 6.6a7.5 7.5 0 1 0 9.6 0" />,
+  menu: <path className="ico" d="M4 7h16M4 12h16M4 17h16" />,
+  close: <path className="ico" d="M6 6l12 12M18 6L6 18" />,
   play: <path className="ico" d="M8 5.5v13l10.5-6.5z" />,
   pause: <path className="ico" d="M8.5 5.5v13M15.5 5.5v13" />,
   speaker: <path className="ico" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5zM15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" />,

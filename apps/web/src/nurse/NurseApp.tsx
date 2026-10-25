@@ -131,7 +131,10 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
               <div className="n-ward">{t.ward}</div>
               <h1 className="n-title">{t.title}</h1>
             </div>
-            <div className="count" aria-label={`${pending.length} ${t.pending}`}>{pending.length}</div>
+            <div className="n-top-end">
+              <div className="count" aria-label={`${pending.length} ${t.pending}`}>{pending.length}</div>
+              {!embedded && <DemoSwitch current="#/nurse" tone="brand" />}
+            </div>
           </div>
           <div className="n-tabs" role="tablist">
             <button role="tab" aria-selected={tab === 'pending'} onClick={() => setTab('pending')}>{t.pending}</button>
@@ -200,7 +203,6 @@ export function NurseApp({ embedded = false }: { embedded?: boolean }) {
               <button aria-pressed={prefs.mode === 'night'} onClick={() => updatePrefs({ mode: 'night' })} title={t.night}>{t.night}</button>
             </div>
           </div>
-          {!embedded && <DemoSwitch current="#/nurse" />}
         </footer>
       </div>
     </div>
