@@ -72,11 +72,8 @@ export function FaceDiagram({ view = 'front', active = null, onSelect, glow = {}
         </>
       ) : (
         <>
-          {/* profile facing left: head and neck, hair cap, ear, then the mask, strap, module and reference cable */}
+          {/* profile facing left: head and neck, then the mask, strap, module and reference cable */}
           <path className="fd-head" d="M168 20C226 20 262 62 262 118C262 156 250 182 238 198C234 214 236 244 240 280H150C150 262 149 250 146 240C132 238 120 232 113 222C108 216 107 210 109 205C107 199 106 195 108 191C106 187 106 183 108 180C106 176 107 173 111 171C102 170 92 166 89 160C90 150 97 140 100 130C102 122 99 114 101 106C106 60 128 20 168 20Z" />
-          <path className="fd-hair" d="M124 60c10-26 30-42 50-44 52-4 86 34 88 92 2 36-6 66-18 88l-14-6c4-14 6-30 2-44-2-16-8-26-16-34-6-18-20-28-40-32-20-4-36-10-52-20z" />
-          <path className="fd-ear side" d="M206 132c14-4 20 14 16 28-2 14-10 22-18 16 6-12 4-30 2-44z" />
-          <path className="fd-ear-in" d="M210 144c5 3 6 11 3 19" />
           <path className="fd-strap" d="M202 114c22 0 42-4 60-10l2 22c-18 6-40 10-62 12z" />
           <path className="fd-mask" fillRule="evenodd" d="M99 108c34-6 70-4 104 6v26c-34 4-70 8-103 10-6-14-7-28-1-42zM110 129a12 8 0 1 0 24 0a12 8 0 1 0-24 0z" />
           <path className="fd-sclera" d="M110 129c5-5 9-7 13-7s8 2 11 7c-3 5-7 7-11 7s-8-2-13-7z" />

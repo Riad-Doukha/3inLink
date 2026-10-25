@@ -57,7 +57,3 @@
 .md-usb path { stroke:#7d8a97; stroke-width:2; stroke-linecap:round; }
 .md-usb.is-on rect { stroke:#3DD68C; }
 @media (prefers-reduced-motion: reduce) { .md-logo.ble-pairing, .md-leds circle.chg { animation:none; } }
-.fd-hair { fill:#2a2f36; }
-.fd-ear-in { fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; opacity:.6; }
-.fd-ear.side { fill:color-mix(in srgb, var(--surface-2) 78%, var(--muted)); stroke:var(--muted); stroke-width:1.6; }
-[data-mode="night"] .fd-hair { fill:#3a4452; }
