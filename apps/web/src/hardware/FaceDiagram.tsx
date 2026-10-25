@@ -7,13 +7,13 @@ const FRONT: Record<ElectrodeId, [number, number]> = {
   vp: [100, 106], vm: [100, 167], hp: [58, 136], hm: [141, 136], ref: [37, 182],
 };
 const SIDE: Record<ElectrodeId, [number, number]> = {
-  vp: [118, 104], vm: [118, 152], hp: [134, 128], hm: [104, 128], ref: [204, 192],
+  vp: [122, 113], vm: [122, 146], hp: [144, 129], hm: [103, 125], ref: [224, 188],
 };
 
 /** Where each label sits relative to its dot, so labels never cover an eye. */
 const LABEL_AT: Record<'front' | 'side', Record<ElectrodeId, [number, number]>> = {
   front: { vp: [0, -18], vm: [0, 19], hp: [-24, 0], hm: [0, 19], ref: [0, -17] },
-  side: { vp: [0, -18], vm: [0, 19], hp: [22, -10], hm: [-22, -10], ref: [0, 19] },
+  side: { vp: [0, -19], vm: [0, 19], hp: [6, -18], hm: [-24, -2], ref: [-26, 6] },
 };
 
 export interface Gaze { x: number; y: number; lid: number }
@@ -72,17 +72,23 @@ export function FaceDiagram({ view = 'front', active = null, onSelect, glow = {}
         </>
       ) : (
         <>
-          <path className="fd-head" d="M150 26c55 0 96 44 98 104 2 44-12 74-26 94v50h-74v-28c-20 0-36-6-44-20l-8-12c-6-4-4-10 0-14l-6-8c-4-4 0-10 4-12l-8-20c-4-6-2-10 6-14 4-26 0-50 6-72 10-28 30-48 52-48z" />
-          <path className="fd-mask" d="M96 104c30-6 70-2 104 22l8 14c-30 0-62 6-94 14-10 2-16-6-18-14z" />
-          <path className="fd-strap-band" d="M206 126c18-4 36-4 50 2M206 156c18 4 36 4 50-2" />
-          <ellipse className="fd-ear" cx="196" cy="160" rx="12" ry="22" />
+          {/* profile facing left: head and neck, hair cap, ear, then the mask, strap, module and reference cable */}
+          <path className="fd-head" d="M168 20C226 20 262 62 262 118C262 156 250 182 238 198C234 214 236 244 240 280H150C150 262 149 250 146 240C132 238 120 232 113 222C108 216 107 210 109 205C107 199 106 195 108 191C106 187 106 183 108 180C106 176 107 173 111 171C102 170 92 166 89 160C90 150 97 140 100 130C102 122 99 114 101 106C106 60 128 20 168 20Z" />
+          <path className="fd-hair" d="M124 60c10-26 30-42 50-44 52-4 86 34 88 92 2 36-6 66-18 88l-14-6c4-14 6-30 2-44-2-16-8-26-16-34-6-18-20-28-40-32-20-4-36-10-52-20z" />
+          <path className="fd-ear side" d="M206 132c14-4 20 14 16 28-2 14-10 22-18 16 6-12 4-30 2-44z" />
+          <path className="fd-ear-in" d="M210 144c5 3 6 11 3 19" />
+          <path className="fd-strap" d="M202 114c22 0 42-4 60-10l2 22c-18 6-40 10-62 12z" />
+          <path className="fd-mask" fillRule="evenodd" d="M99 108c34-6 70-4 104 6v26c-34 4-70 8-103 10-6-14-7-28-1-42zM110 129a12 8 0 1 0 24 0a12 8 0 1 0-24 0z" />
+          <path className="fd-sclera" d="M110 129c5-5 9-7 13-7s8 2 11 7c-3 5-7 7-11 7s-8-2-13-7z" />
+          <circle className="fd-iris" cx="118" cy="129" r="4.6" />
+          <circle className="fd-pupil" cx="117" cy="129" r="2.2" />
+          <path className="fd-cable" d="M240 142c-2 16-8 30-16 42" />
           <g className="fd-module">
-            <rect x="214" y="116" width="50" height="52" rx="14" />
-            <path d="M226 142c5-7 9-9 13-9s8 2 13 9c-5 7-9 9-13 9s-8-2-13-9z" />
-            <circle cx="239" cy="142" r="2.6" />
+            <rect x="220" y="100" width="44" height="42" rx="12" />
+            <path d="M231 121c4-6 8-8 11-8s7 2 11 8c-4 6-8 8-11 8s-7-2-11-8z" />
+            <circle cx="242" cy="121" r="2.4" />
           </g>
-          <path className="fd-cable" d="M214 130c-30-8-60-10-80-2M214 150c-20 20-6 38-10 42" />
-          {showLabels && <text className="fd-note" x="214" y="186">module</text>}
+          {showLabels && <text className="fd-note" x="216" y="92">module</text>}
         </>
       )}
 
