@@ -104,15 +104,16 @@ function Fact({ to, decimals = 0, suffix = '', label, i }: { to: number; decimal
 
 const STEPS = [
   { t: 'Sense', d: 'Electrodes around the eyes read the corneo-retinal potential. No camera, so it works in the dark.' },
-  { t: 'Clean', d: 'An AD620 amplifier and a 0.1–35 Hz filter, battery powered to avoid 50 Hz mains noise. An ESP32 digitizes at 250 Hz.' },
+  { t: 'Amplify', d: 'An AD620 amplifier and a 0.1–35 Hz filter, battery powered to avoid 50 Hz mains noise. An ESP32 digitizes at 250 Hz.' },
   { t: 'Recognize', d: 'A classifier labels each 3-second window: up, down, straight or double blink.' },
   { t: 'Alert', d: 'The confirmed message reaches the nurses’ phones with the patient ID and room, in real time.' },
 ];
 
 const FOR = [
-  { t: 'After surgery', d: 'Patients who cannot speak or move for a while, for example while intubated.', icon: 'bed' as const },
+  { t: 'Post-surgery', d: 'Patients who cannot speak or move for a while, for example while intubated.', icon: 'bed' as const },
   { t: 'Paralysis', d: 'People with severe mobility limits who still control their eyes.', icon: 'nurse' as const },
   { t: 'ALS in emergencies', d: 'A fast, reliable way to reach staff when speech and hands fail.', icon: 'pain' as const },
+  { t: 'Locked-in syndrome (LiS)', d: 'Fully conscious people who cannot move or speak, but can still move their eyes up and down and blink.', icon: 'family' as const },
 ];
 
 const scrollTo = (id: string) => (e: MouseEvent) => {
