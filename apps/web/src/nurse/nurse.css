@@ -1,4 +1,4 @@
-/* Nurse app: the "Nurse app" phone from the design system, full height on a phone, centered column on desktop. */
+/* Care assistant app: the "Care assistant app" phone from the design system, full height on a phone, centered column on desktop. */
 /* Exactly one viewport: header and footer stay put, only the alert list scrolls. */
 .nurse { background:var(--bg); color:var(--ink); height:100vh; height:100dvh; overflow:hidden; }
 .nurse.embedded { height:100%; }

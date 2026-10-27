@@ -1,4 +1,4 @@
--- Sample alerts from the design system's nurse app demo. Safe to re-run.
+-- Sample alerts from the design system's care assistant app demo. Safe to re-run.
 -- reset_demo() returns nothing; the select below shows the six seeded rows.
 select public.reset_demo();
 

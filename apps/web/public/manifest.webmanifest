@@ -1,7 +1,7 @@
 {
   "name": "3inLink",
   "short_name": "3inLink",
-  "description": "Eye-controlled patient communication: patient screen and nurse app.",
+  "description": "Eye-controlled patient communication: patient screen and care assistant app.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0D1622",

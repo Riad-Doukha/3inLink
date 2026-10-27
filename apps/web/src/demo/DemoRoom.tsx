@@ -195,8 +195,8 @@ export function DemoRoom() {
           </div>
           <p className="room-caption">
             <b>Patient screen</b> follows the classifier: up and down move around the ring, a double blink sends to the nurses.
-            <button className="room-link" onClick={() => window.open('#/nurse', '3inlink-nurse', 'width=520,height=900')}>Open nurse app</button>
-            <button className="room-link" onClick={() => void alertStore.reset()}>Reset nurse board</button>
+            <button className="room-link" onClick={() => window.open('#/nurse', '3inlink-nurse', 'width=520,height=900')}>Open care assistant app</button>
+            <button className="room-link" onClick={() => void alertStore.reset()}>Reset care assistant board</button>
           </p>
         </div>
       </main>

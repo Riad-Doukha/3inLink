@@ -7,9 +7,9 @@
 ```
 apps/web/                 Web app (React + Vite), one static site with three screens
   src/home/               Landing page                          #/
-  src/demo/               Live demo: real classifier output drives the patient screen, alerts reach the nurse phone   #/demo
+  src/demo/               Live demo: real classifier output drives the patient screen, alerts reach the care assistant app   #/demo
   src/patient/            Patient screen (HCI), 3×3 gaze grid   #/patient
-  src/nurse/              Nurse app and phone showcase          #/nurse
+  src/nurse/              Care assistant app and phone showcase          #/nurse
   src/lib/                Supabase client, alert store, demo switcher
 packages/core/            Shared logic: 8 commands, EN/AR/FR text, gaze navigation, double-blink state machine (+ tests)
 packages/design-tokens/   Colors (day/night), type, spacing, icons from the design system
@@ -23,7 +23,7 @@ docs/                     Design system (design-system.html) and technical notes
 1. **Sense:** electrodes around the eyes. An AD620 amplifier and a 0.1–35 Hz filter condition the signal, and an ESP32 digitizes it at 250 Hz and sends it over Bluetooth.
 2. **Recognize:** the Python pipeline (`eog/`) classifies each 3-second window as up, down, straight or double blink with an LDA model.
 3. **Select:** on the patient screen, up and down move around the eight messages. A double blink sends the selected one. Looking only previews it and reads it aloud.
-4. **Alert:** the message reaches the nurse app in real time through Supabase, with the patient ID and room.
+4. **Alert:** the message reaches the care assistant app in real time through Supabase, with the patient ID and room.
 
 ## Run the web app
 
@@ -56,6 +56,6 @@ See [`eog/README.md`](eog/README.md).
 ## Team
 
 - **Dr. Ahlem Benazzouz:** EOG hardware, signal acquisition, processing and classification (`eog/`).
-- **Eng. Mohamed Riad Doukha:** design system, patient screen, nurse app, web platform.
+- **Eng. Mohamed Riad Doukha:** design system, patient screen, care assistant app, web platform.
 
 Icons: command symbols drawn for 3inLink. The settings gear is adapted from [Lucide](https://lucide.dev) (ISC licence).

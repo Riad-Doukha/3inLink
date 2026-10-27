@@ -8,7 +8,7 @@
 .demo-switch.brand a:hover { background:color-mix(in srgb, var(--brand-ink) 12%, transparent); }
 .demo-switch.brand a[aria-current="page"] { background:var(--brand-ink); color:var(--brand); }
 
-/* on a light or dark surface (nurse app footer) */
+/* on a light or dark surface (care assistant app) */
 .demo-switch.surface { border:1.5px solid var(--line); color:var(--ink); background:var(--surface); }
 .demo-switch.surface a { color:var(--ink); }
 .demo-switch.surface a:hover { background:var(--tint); }

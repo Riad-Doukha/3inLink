@@ -7,7 +7,7 @@ export const POS: readonly (readonly [number, number])[] = [
   [0, 0], [0, 1], [0, 2], [1, 2], [2, 2], [2, 1], [2, 0], [1, 0],
 ];
 
-/** Commands that staff must treat as urgent (pinned and red in the nurse app). */
+/** Commands that staff must treat as urgent (pinned and red in the care assistant app). */
 export const URGENT: ReadonlySet<Command> = new Set<Command>(['pain']);
 
 export type Lang = 'en' | 'ar' | 'fr';

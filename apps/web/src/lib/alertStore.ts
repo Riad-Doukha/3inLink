@@ -9,7 +9,7 @@ export type AlertChange =
   /** Many rows changed at once (demo reset): re-list. */
   | { type: 'reload' };
 
-/** Where patient alerts live. The patient screen creates them; the nurse app lists, watches and handles them. */
+/** Where patient alerts live. The patient screen creates them; the care assistant app lists, watches and handles them. */
 export interface AlertStore {
   readonly mode: 'supabase' | 'local';
   list(): Promise<PatientAlert[]>;
@@ -67,7 +67,7 @@ function supabaseStore(): AlertStore {
     },
     subscribe(onChange, onStatus) {
       onStatus('connecting');
-      // A unique topic per subscription: re-subscribing under the same name (React remounts, two nurse
+      // A unique topic per subscription: re-subscribing under the same name (React remounts, two care assistant
       // views on one page) lets the server's close of the old channel kill the new one.
       const channel = db
         .channel(`alerts-feed-${crypto.randomUUID()}`)

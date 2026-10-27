@@ -10,13 +10,13 @@ import './showcase.css';
 const WIDE = '(min-width: 980px) and (min-height: 620px)';
 
 const FEATURES: { icon: IconName; title: string; text: string; urgent?: boolean }[] = [
-  { icon: 'check', title: 'Live, no refresh', text: 'A confirmed double blink appears on every nurse phone within a second or two.' },
+  { icon: 'check', title: 'Live, no refresh', text: 'A confirmed double blink appears in the care assistant app on every phone within a second or two.' },
   { icon: 'pain', title: 'Pain comes first', text: 'Pinned to the top in red, with a double vibration. Late alerts turn red after 10 minutes.', urgent: true },
   { icon: 'bed', title: 'ID and room, never names', text: 'Cards show only the patient ID and room, so nothing sensitive sits on a lock screen.' },
   { icon: 'speaker', title: 'English, Français, العربية', text: 'Switch language in the app footer. Arabic mirrors the whole layout.' },
 ];
 
-/** Nurse app presented inside a phone on a dark stage. Narrow screens get the plain full-screen app. */
+/** Care assistant app presented inside a phone on a dark stage. Narrow screens get the plain full-screen app. */
 export function NurseShowcase() {
   const wide = useMedia(WIDE);
   const [qr, setQr] = useState<string | null>(null);
@@ -47,8 +47,8 @@ export function NurseShowcase() {
       </header>
 
       <main className="stage-main">
-        <section className="stage-side left" aria-label="What the nurse app does">
-          <p className="stage-eyebrow">Nurse app</p>
+        <section className="stage-side left" aria-label="What the care assistant app does">
+          <p className="stage-eyebrow">Care assistant app</p>
           <h1 className="stage-title">Every request, the moment it is sent.</h1>
           <ul className="stage-features">
             {FEATURES.map((f, i) => (
@@ -61,7 +61,7 @@ export function NurseShowcase() {
         </section>
 
         <div className="phone-wrap">
-          <PhoneFrame label="Nurse app on a phone">
+          <PhoneFrame label="Care assistant app on a phone">
             <NurseApp embedded />
           </PhoneFrame>
         </div>
@@ -77,12 +77,12 @@ export function NurseShowcase() {
           </ol>
 
           <div className="stage-qr">
-            {qr ? <img src={qr} alt="QR code to open the nurse app on your phone" width={120} height={120} /> : <span className="stage-qr-ph" />}
+            {qr ? <img src={qr} alt="QR code to open the care assistant app on your phone" width={120} height={120} /> : <span className="stage-qr-ph" />}
             <span>
               <b>Use your own phone</b>
               <span>{isLocal
                 ? 'Scan once the demo is deployed. Localhost is not reachable from a phone.'
-                : 'Scan to open the nurse app. Alerts arrive on it in real time.'}</span>
+                : 'Scan to open the care assistant app. Alerts arrive on it in real time.'}</span>
             </span>
           </div>
         </section>

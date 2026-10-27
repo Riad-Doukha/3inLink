@@ -184,7 +184,7 @@ export function Home() {
           <div className="h-sec-head">
             <p className="h-eyebrow" data-reveal>Try it now</p>
             <h2 data-reveal style={st(1)}>Open both screens and send a message</h2>
-            <p className="h-sub" data-reveal style={st(2)}>Put the two side by side, or open the nurse app on your phone with the same link.</p>
+            <p className="h-sub" data-reveal style={st(2)}>Put the two side by side, or open the care assistant app on your phone with the same link.</p>
           </div>
           <div className="h-try">
             <a className="h-card" href="#/patient" data-reveal style={st(0)}>
@@ -199,7 +199,7 @@ export function Home() {
             </a>
             <a className="h-card" href="#/nurse" data-reveal style={st(1)}>
               <span className="h-card-ic urgent"><Icon name="pain" /></span>
-              <span className="h-card-t">Nurse app</span>
+              <span className="h-card-t">Care assistant app</span>
               <span className="h-card-d">Live list of patient requests with ID and room. Pain is pinned in red. Tap to mark handled.</span>
               <span className="h-keys"><span>Works on any phone, no install</span></span>
               <span className="h-card-go">Open <Icon name="right" /></span>

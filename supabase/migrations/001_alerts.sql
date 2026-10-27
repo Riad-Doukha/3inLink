@@ -13,7 +13,7 @@ create table if not exists public.alerts (
   source        text not null default 'patient' check (source in ('patient','seed'))
 );
 
--- The nurse app lists the most recent alerts first.
+-- The care assistant app lists the most recent alerts first.
 create index if not exists alerts_created_at_idx on public.alerts (created_at desc);
 
 alter table public.alerts enable row level security;
@@ -42,7 +42,7 @@ revoke insert, update, delete on public.alerts from anon, authenticated;
 grant insert (patient_code, room, command) on public.alerts to anon, authenticated;
 grant update (handled_at) on public.alerts to anon, authenticated;
 
--- "Reset demo" in the nurse app: clears the board and restores the six sample alerts.
+-- "Reset demo" in the care assistant app: clears the board and restores the six sample alerts.
 create or replace function public.reset_demo()
 returns void
 language plpgsql
@@ -64,7 +64,7 @@ $$;
 revoke all on function public.reset_demo() from public;
 grant execute on function public.reset_demo() to anon, authenticated;
 
--- Push inserts and updates to subscribed nurse apps.
+-- Push inserts and updates to subscribed care assistant apps.
 do $$
 begin
   if not exists (

@@ -3,7 +3,7 @@ import { LANGS, type Lang } from '@3inlink/core';
 
 /**
  * One interface language for the whole product. Choosing EN, FR or AR on the patient screen or in the
- * nurse app switches both, in this tab and in other tabs of the same browser (through the storage event).
+ * care assistant app switches both, in this tab and in other tabs of the same browser (through the storage event).
  */
 const KEY = '3inlink.lang';
 const listeners = new Set<() => void>();

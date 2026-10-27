@@ -1,6 +1,6 @@
 import type { Phase } from '@3inlink/core';
 
-/** Bedside settings. The interface and voice language is shared with the nurse app (see lib/lang.ts). */
+/** Bedside settings. The interface and voice language is shared with the care assistant app (see lib/lang.ts). */
 export interface PatientSettings {
   phase: Phase;
   mode: 'night' | 'day';

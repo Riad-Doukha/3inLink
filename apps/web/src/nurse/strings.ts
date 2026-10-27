@@ -1,6 +1,6 @@
 import type { Lang } from '@3inlink/core';
 
-/** Nurse app interface text. Alert titles come from STAFF_MESSAGES in @3inlink/core. */
+/** Care assistant app interface text. Alert titles come from STAFF_MESSAGES in @3inlink/core. */
 export const NURSE_TEXT: Record<Lang, {
   ward: string; title: string; pending: string; handled: string; room: string; min: string; now: string;
   none: string; noneHandled: string; tapHint: string; newAlert: string; dismiss: string; reset: string;

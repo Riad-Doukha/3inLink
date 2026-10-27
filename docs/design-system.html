@@ -301,7 +301,7 @@ td.n { font-variant-numeric:tabular-nums; }
   <div class="wrap">
     <a class="brandmark" href="#top"><svg aria-hidden="true"><use href="#mark"/></svg>3inLink</a>
     <nav aria-label="Sections">
-      <a href="#principles">Principles</a><a href="#color">Color</a><a href="#type">Type</a><a href="#shape">Space and shape</a><a href="#icons">Icons</a><a href="#patient">Patient screen</a><a href="#nurse">Nurse app</a><a href="#landing">Landing page</a><a href="#rules">Rules</a><a href="#tokens">Tokens</a>
+      <a href="#principles">Principles</a><a href="#color">Color</a><a href="#type">Type</a><a href="#shape">Space and shape</a><a href="#icons">Icons</a><a href="#patient">Patient screen</a><a href="#nurse">Care assistant app</a><a href="#landing">Landing page</a><a href="#rules">Rules</a><a href="#tokens">Tokens</a>
     </nav>
   </div>
 </div>
@@ -327,7 +327,7 @@ td.n { font-variant-numeric:tabular-nums; }
   <section class="sec" id="principles">
     <header><h2>Principles</h2><p class="lead">Every choice below follows from who is using each screen and under what conditions.</p></header>
     <ul class="rules">
-      <li><b>Dark rooms come first.</b><span>The system exists because camera-based tools fail in low light. The patient screen has a night mode that is dim, low-glare and never pure white. The nurse app has one too, for night shifts.</span></li>
+      <li><b>Dark rooms come first.</b><span>The system exists because camera-based tools fail in low light. The patient screen has a night mode that is dim, low-glare and never pure white. The care assistant app has one too, for night shifts.</span></li>
       <li><b>Looking selects, a double blink sends.</b><span>Gaze only previews a message. Nothing reaches staff until the patient blinks twice in quick succession. A single blink is ignored because people blink naturally. The design must make these two states impossible to confuse.</span></li>
       <li><b>Eight messages, two phases.</b><span>The same eight messages sit around the message panel in a 3×3 grid in both phases, and the staff app uses the same icons. Phase 1 runs on the current single-channel circuit, which detects up and down. Phase 2 runs on the new two-channel circuit with all four directions. Only the way the patient moves between tiles changes.</span></li>
       <li><b>Never rely on color alone.</b><span>Every state carries an icon, a label and a border change as well as a color. Red-green color blindness must not hide a state.</span></li>
@@ -363,7 +363,7 @@ td.n { font-variant-numeric:tabular-nums; }
       <div class="spec"><div class="meta">BODY · ATKINSON HYPERLEGIBLE 400</div><p>Il1 O0 rn m. Patients choose a message by looking at a symbol and confirm it with a blink. The message is read aloud before it is sent.</p><div class="meta">DATA · IBM PLEX MONO 500</div><div><span class="chip">ID PT-10482</span> <span class="chip room">Room 204-B</span></div></div>
     </div>
     <div class="scroll"><table>
-      <thead><tr><th>Role</th><th>Patient screen</th><th>Nurse app</th><th>Landing page</th></tr></thead>
+      <thead><tr><th>Role</th><th>Patient screen</th><th>Care assistant app</th><th>Landing page</th></tr></thead>
       <tbody>
         <tr><td>Display</td><td class="n">Tile label 24–32 px</td><td class="n">Screen title 22 px</td><td class="n">Hero 40–72 px</td></tr>
         <tr><td>Message</td><td class="n">Center panel 26–36 px</td><td class="n">Alert title 16 px</td><td class="n">Section 28 px</td></tr>
@@ -375,7 +375,7 @@ td.n { font-variant-numeric:tabular-nums; }
   </section>
 
   <section class="sec" id="shape">
-    <header><h2>Space and shape</h2><p class="lead">A 4 px base. Patient tiles use the largest radius and the biggest targets. The nurse app is denser but keeps 44 px touch targets.</p></header>
+    <header><h2>Space and shape</h2><p class="lead">A 4 px base. Patient tiles use the largest radius and the biggest targets. The care assistant app is denser but keeps 44 px touch targets.</p></header>
     <div class="space" aria-label="Spacing scale">
       <div><i style="width:4px;height:4px"></i>4</div><div><i style="width:8px;height:8px"></i>8</div><div><i style="width:12px;height:12px"></i>12</div><div><i style="width:16px;height:16px"></i>16</div><div><i style="width:24px;height:24px"></i>24</div><div><i style="width:32px;height:32px"></i>32</div><div><i style="width:48px;height:48px"></i>48</div><div><i style="width:72px;height:72px"></i>72</div>
     </div>
@@ -466,7 +466,7 @@ td.n { font-variant-numeric:tabular-nums; }
   </section>
 
   <section class="sec" id="nurse">
-    <header><h2>Nurse app</h2><p class="lead">A pending and handled list for one ward. Tap a card to mark it handled. Switch language to see Arabic mirror the layout.</p></header>
+    <header><h2>Care assistant app</h2><p class="lead">A pending and handled list for one ward. Tap a card to mark it handled. Switch language to see Arabic mirror the layout.</p></header>
     <div class="ctrl">
       <div class="seg" role="group" aria-label="App language"><button data-l="en" aria-pressed="true">EN</button><button data-l="fr" aria-pressed="false">FR</button><button data-l="ar" aria-pressed="false">AR</button></div>
       <div class="seg" role="group" aria-label="App lighting"><button data-m="day" aria-pressed="true">Day</button><button data-m="night" aria-pressed="false">Night shift</button></div>
@@ -558,7 +558,7 @@ td.n { font-variant-numeric:tabular-nums; }
   </section>
 
   <section class="sec" id="tokens">
-    <header><h2>Tokens</h2><p class="lead">The same variables used on this page. Day values are the default; the night values apply to the patient screen and the nurse app night shift mode.</p></header>
+    <header><h2>Tokens</h2><p class="lead">The same variables used on this page. Day values are the default; the night values apply to the patient screen and the care assistant app night shift mode.</p></header>
     <div class="codebox">
       <button class="btn" id="copy">Copy</button>
       <pre id="code">:root {
@@ -686,7 +686,7 @@ td.n { font-variant-numeric:tabular-nums; }
   document.getElementById('mode-night').addEventListener('click', function(){ stageMode('night'); });
   document.getElementById('mode-day').addEventListener('click', function(){ stageMode('day'); });
 
-  /* ---- Nurse app ---- */
+  /* ---- Care assistant app ---- */
   var L = {
     en:{dir:'ltr', ward:'3INLINK · WARD 2', title:'Patient alerts', pend:'Pending', hand:'Handled', room:'Room', min:'min', none:'No alerts here.',
         pain:'I feel pain', nurse:'Call nurse', water:'I need water', bed:'Uncomfortable: please adjust my bed', toilet:'I need the bathroom', cold:'I feel cold', hot:'I feel hot', family:'Call my family'},

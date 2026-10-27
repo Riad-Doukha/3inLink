@@ -8,7 +8,7 @@ const LINKS = [
   { href: '#/demo', label: 'Live demo' },
   { href: '#/hardware', label: 'Hardware' },
   { href: '#/patient', label: 'Patient' },
-  { href: '#/nurse', label: 'Nurse' },
+  { href: '#/nurse', label: 'Care assistant' },
 ] as const;
 
 type Current = (typeof LINKS)[number]['href'];
